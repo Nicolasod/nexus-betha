@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      width: 380px;
+      padding: 16px;
+      font-family: Arial, sans-serif;
+      background: #f9f9f9;
+      color: #333;
+    }
+
+    h2 {
+      font-size: 14px;
+      font-weight: bold;
+      margin-bottom: 14px;
+      color: #1a73e8;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .field {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+    }
+
+    .field label {
+      display: block;
+      font-size: 10px;
+      font-weight: bold;
+      color: #888;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 6px;
+    }
+
+    .value {
+      font-size: 11px;
+      color: #333;
+      word-break: break-all;
+      background: #f5f5f5;
+      border-radius: 4px;
+      padding: 6px 8px;
+      min-height: 24px;
+      margin-bottom: 8px;
+      font-family: monospace;
+    }
+
+    .value.empty {
+      color: #aaa;
+      font-style: italic;
+      font-family: Arial, sans-serif;
+    }
+
+    .btn {
+      border: none;
+      border-radius: 4px;
+      padding: 5px 12px;
+      font-size: 11px;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+
+    .btn-copy {
+      background: #1a73e8;
+      color: white;
+    }
+
+    .btn-copy:hover { background: #1558b0; }
+    .btn-copy.ok    { background: #34a853; }
+
+    .btn-all {
+      width: 100%;
+      background: #333;
+      color: white;
+      padding: 8px;
+      font-size: 12px;
+      border-radius: 6px;
+      margin-top: 4px;
+    }
+
+    .btn-all:hover { background: #111; }
+    .btn-all.ok    { background: #34a853; }
+
+    .time {
+      font-size: 10px;
+      color: #aaa;
+      text-align: right;
+      margin-top: 10px;
+    }
+
+    .no-data {
+      text-align: center;
+      color: #aaa;
+      font-size: 12px;
+      padding: 20px 0;
+    }
+
+    .source {
+      font-size: 11px;
+      font-weight: bold;
+      color: #555;
+      background: #eef2ff;
+      border: 1px solid #c7d2fe;
+      border-radius: 6px;
+      padding: 5px 10px;
+      margin-bottom: 12px;
+      word-break: break-all;
+    }
+  </style>
+</head>
+<body>
+  <h2>🔑 Token Capture</h2>
+
+  <div id="content">
+    <div class="no-data">Aguardando captura...<br><br>Acesse o eSocial Cloud e<br>faça qualquer ação na tela.</div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

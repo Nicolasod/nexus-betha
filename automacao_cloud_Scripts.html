@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Nexus - Portal do Conhecimento</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Roboto Mono', monospace;
+            background: #16162a;
+            color: #e0e0e0;
+            padding: 32px 48px;
+            line-height: 1.6;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(0,224,255,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0,224,255,0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        header, main, footer { position: relative; z-index: 1; }
+
+        .top-nav {
+            position: relative;
+            z-index: 10;
+            padding: 0 0 24px 0;
+        }
+        .top-nav a {
+            display: inline-block;
+            background: rgba(0,224,255,0.08);
+            border: 1px solid rgba(0,224,255,0.25);
+            color: #00e0ff;
+            text-decoration: none;
+            font-size: 0.78rem;
+            font-weight: bold;
+            font-family: 'Roboto Mono', monospace;
+            padding: 8px 12px;
+            border-radius: 8px;
+            letter-spacing: 1px;
+            transition: background 0.2s, box-shadow 0.2s;
+        }
+        .top-nav a:hover {
+            background: rgba(0,224,255,0.15);
+            box-shadow: 0 4px 12px rgba(0,224,255,0.2);
+        }
+
+        header, main, footer { position: relative; z-index: 1; }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            color: #00e0ff;
+            font-size: 2.4rem;
+            margin-bottom: 8px;
+            text-shadow: 0 0 8px #00e0ff;
+        }
+
+        p.lead {
+            color: #a0a0a0;
+            margin-bottom: 25px;
+        }
+
+        hr {
+            margin: 36px auto;
+            border: none;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(0,224,255,0.3), transparent);
+            width: 60%;
+        }
+
+        main {
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        .filter-card {
+            background: #13132a;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.45);
+        }
+
+        #search {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border-radius: 6px;
+            border: 1px solid rgba(0, 224, 255, 0.12);
+            background: #0f1724;
+            color: #00e0ff;
+            font-size: 1rem;
+        }
+
+        .filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .filter-select {
+            padding: 10px 12px;
+            background: #0f1724;
+            color: #00e0ff;
+            border: 1px solid rgba(0, 224, 255, 0.12);
+            border-radius: 6px;
+            font-size: 1rem;
+        }
+
+        section {
+            margin-bottom: 40px;
+            padding: 20px;
+            background: #13132a;
+            border-radius: 12px;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.45);
+        }
+
+        h2 {
+            color: #00e0ff;
+            font-size: 1.5rem;
+            margin-bottom: 18px;
+        }
+
+        .scripts {
+            display: flex;
+            gap: 20px;
+        }
+
+        .scripts-column {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .script-item {
+            padding: 16px;
+            border-left: 3px solid rgba(0, 224, 255, 0.35);
+            background: #1a1a30;
+            border-radius: 8px;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+        }
+
+        .script-title {
+            font-size: 1.05rem;
+            color: #cfeff6;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 2px 6px;
+            margin-bottom: 10px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        .tag-consulta {
+            background: rgba(0, 224, 255, 0.15);
+            color: #00e0ff;
+        }
+
+        .tag-alteracao {
+            background: rgba(255, 210, 0, 0.18);
+            color: #ffe46b;
+        }
+
+        .tag-delete {
+            background: rgba(255, 80, 80, 0.20);
+            color: #ff7b7b;
+        }
+
+        .tag-banco {
+            background: rgba(120, 255, 120, 0.18);
+            color: #7fff7f;
+        }
+
+        .tag-relatorio {
+           background: rgba(155, 89, 255, 0.18);
+            color: #caa6ff;
+        }
+
+        .tag-implantacao {
+            background: rgba(0, 255, 170, 0.18);
+            color: #00ffbf;
+        }
+
+        .tag-novo {
+            display: inline-block;
+            background: #00e0ff;
+            color: #0f0f1d;
+            padding: 3px 8px;
+            margin-left: 10px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            animation: pulseNew 1.6s infinite ease-in-out;
+        }
+
+        @keyframes pulseNew {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 0 6px #00e0ff;
+            }
+
+            50% {
+                transform: scale(1.15);
+                box-shadow: 0 0 14px #00e0ff;
+            }
+
+            100% {
+                transform: scale(1);
+                box-shadow: 0 0 6px #00e0ff;
+            }
+        }
+
+        .inline-code {
+            background: #1c1c2e;
+            padding: 3px 6px;
+            border-radius: 6px;
+            color: #00ffff;
+            font-size: 0.9rem;
+        }
+
+        .toggle-desc {
+            cursor: pointer;
+            color: #00e0ff;
+            font-size: 0.85rem;
+            margin-top: 6px;
+            display: inline-block;
+        }
+
+        .description-box {
+            margin-top: 12px;
+            background: rgba(255, 255, 255, 0.04);
+            padding: 12px;
+            border-left: 3px solid #00e0ff44;
+            border-radius: 8px;
+            color: #b9ffff;
+            font-size: 0.9rem;
+            display: none;
+        }
+
+        .copy-btn {
+            background: linear-gradient(45deg, #00e0ff, #0055ff);
+            border: none;
+            padding: 5px 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            color: #fff;
+            font-weight: 600;
+            font-size: 0.85rem;
+            box-shadow: 0 4px 12px rgba(0, 224, 255, 0.18);
+        }
+
+        .copy-btn:hover {
+            background-color: #00b3cc;
+        }
+
+.filters-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.form-btn {
+    position: relative;
+    padding: 8px 18px;
+    border-radius: 10px;
+    border: 1px solid rgba(0, 255, 255, 0.4);
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.85rem;
+    letter-spacing: 0.4px;
+    white-space: nowrap;
+    overflow: hidden;
+
+    color: #0f0f1d;
+
+    background: linear-gradient(
+        120deg,
+        #00f5ff,
+        #00ffb3,
+        #00e0ff
+    );
+    background-size: 200% 200%;
+    animation: gradientFlow 5s ease infinite;
+
+    box-shadow:
+        0 0 8px rgba(0, 255, 255, 0.4);
+
+    transition: all 0.3s ease;
+}
+
+.form-btn:hover {
+    transform: translateY(-2px);
+    box-shadow:
+        0 0 14px #00f5ff,
+        0 0 25px rgba(0, 255, 200, 0.6);
+}
+
+.form-btn:active {
+    transform: scale(0.97);
+}
+
+@keyframes gradientFlow {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+main { animation: fadeUp 0.5s ease both; }
+
+    </style>
+</head>
+
+<body>
+
+    <nav class="top-nav"><a href="index.html">← Nexus</a></nav>
+
+    <header>
+        <h1>🛠️ Scripts e Relatórios Disponíveis</h1>
+        <p class="lead">Listagem organizada de scripts e relatórios usados nos processos de implantação/serviços.</p>
+        <hr>
+    </header>
+
+    <div id="notification" style="
+    max-width: 1200px;
+    margin: 0 auto 20px auto;
+    padding: 12px 16px;
+    background: rgba(0, 224, 255, 0.08);
+    border: 1px solid rgba(0, 224, 255, 0.25);
+    border-radius: 10px;
+    color: #00e0ff;
+    display: none;
+">
+</div>
+    <main>
+
+<div class="filter-card">
+    <input id="search" type="text" placeholder="🔍 Buscar por nome, tipo ou chave...">
+
+    <div class="filters-row">
+        <div class="filters">
+            <select id="filter-system" class="filter-select">
+                <option value="">Todos os Sistemas</option>
+                <option value="folha">Folha</option>
+                <option value="rh">RH</option>
+                <option value="ponto">Ponto</option>
+                <option value="esocial">eSocial</option>
+            </select>
+
+            <select id="filter-type" class="filter-select">
+                <option value="">Todos os Tipos</option>
+                <option value="consulta">CONSULTA</option>
+                <option value="alteracao">ALTERAÇÃO</option>
+                <option value="delete">DELETE</option>
+                <option value="banco">BANCO</option>
+                <option value="relatorio">RELATÓRIO</option>
+                <option value="implantacao">IMPLANTAÇÃO</option>
+            </select>
+        </div>
+
+        <button class="form-btn" onclick="goToForm()">
+            ➕ Adicionar Novo Script / Relatório
+        </button>
+    </div>
+</div>
+
+        <div id="scripts-container"></div>
+
+    </main>
+
+    <script>
+
+        const scripts = [
+            { system: "folha", type: "consulta", title: "Consulta Valor de Base por Matrícula e Competência", key: "7556ea5b-86c2-406d-b213-14cdd8b4fd6d", date: "2026-09-03", description: "Consulta Valor de Base por Matrícula e Competência" },
+            { system: "folha", type: "alteracao", title: "Datas de início e fim do período aquisitivo - (datas + movimentação)", key: "8ff59ff5-6ac1-4cb4-9166-b9abd34b2a05", date: "2026-08-21", description: "Altera dataInicial/dataFinal de um periodo aquisitivo. Se o periodo estiver CANCELADO e sem movimentacao de cancelamento registrada (dado historico incompleto), reconstroi a movimentacao antes de salvar - evita o erro  \"Não é possível salvar um periodo cancelado sem movimentação de cancelamento\"." },
+            { system: "folha", type: "alteracao", title: "Auditoria de Vagas Ocupadas x Matriculas Reais - Cargo", key: "25596fec-bbae-44ea-86ee-4847fedd031f", date: "2026-08-17", description: "O contador de vagas ocupadas do cargo conta as matriculas ativas (cargo efetivo ou comissionado) com ocupaVaga=true. Este script liga a flag em quem esta ativo e sem ela." },
+            { system: "folha", type: "relatorio", title: "Comparativo Folha Mensal x Folha Férias (eventos x réplicas)", date: "2026-08-11", fonte: "5bdd9cf3-d895-417e-8b2a-c14316221cce", relatorio: "160f59a4-5662-4522-9414-10520bb45fd9", description: "Realiza o comparativo entre os eventos calculados na folha de férias x réplicas destes na folha mensal (aponta divergências ou conformidade nos eventos)" },
+            { system: "folha", type: "consulta", title: "Auditoria de Vagas Ocupadas x Matriculas Reais - Cargo", key: "65857b53-0338-4b9d-8f21-948ebdc76159", date: "2026-08-17", description: "Cruza o contador vagas ocupadas do cadastro de cargos contra a contagem real de matriculas ativas. Marca cargos extintos e sinaliza extintos que ainda possuem ocupantes. Divergencias primeiro; resumo ao final do CSV." },
+            { system: "folha", type: "alteracao", title: "Troca eventos replicados na mensal (evento x por evento y)", key: "29bbf440-2f56-4827-bc68-750f83a4f210", date: "2026-08-06", description: "Realiza a troca de um evento por outro, trocando apenas eventos que estão replicados na folha mensal." },
+            { system: "folha", type: "consulta", title: "Consulta de Cargos por Ato Administrativo", key: "f115f5a8-f126-45a1-9e01-738b15e41d34", date: "2026-08-05", description: "Lista todos os cargos que possuem o ato administrativo informado (busca parcial no número ou descrição do ato)." },
+            { system: "folha", type: "consulta", title: "Aniversários de Serviço por Triênio (28/05/2020 a 31/12/2021)", key: "4a5c401b-85d4-4fc7-8600-e7b6b0f02e34", date: "2026-08-04", description: "Lista servidores que completaram múltiplos de 3 anos de serviço entre 28/05/2020 e 31/12/2021, com número de triênios correspondente." },
+            { system: "folha", type: "relatorio", title: "Relatório de Custo de Funcionários", date: "2026-07-30", fonte: "02605e2f-a94d-4aa6-af25-a6387aeb45e7", relatorio: "b944797f-be86-43ee-a632-bd9ddb9e2da8", description: "Relatório que apresenta, por servidor, o salário bruto, o valor do FGTS, os encargos patronais (INSS ou Fundo Próprio, conforme o regime previdenciário do servidor), o custo total, os descontos e o salário líquido de uma competência específica, com dados consolidados dos relatórios de Encargos INSS-FGTS e Previdência Própria. Permite agrupamento por organograma, secretaria ou grupo funcional." },
+            { system: "folha", type: "consulta", title: "Eventos com valorReferencia negativo - por Competência", key: "bd9150ea-8a7b-4565-8968-85e41f0deb84", date: "2026-07-30", description: "Verifica todas as folhas calculadas da competência informada e lista os eventos cujo valorReferencia menor que zero. Gera CSV." },
+            { system: "esocial", type: "delete", title: "Exclusão de domínios duplicados - eSocial", key: "edd60b99-bb7a-4ddd-9e81-073cbb7ba04f", date: "2026-07-20", description: "Script que localiza e remove históricos de domínio eSocial duplicados: para cada domínio, mantém a versão que já tem recibo de envio e exclui as versões extras que ficaram \"Sem erro / Pendente\" sem recibo (duplicatas geradas indevidamente). Alertas de uso: Sempre rodar primeiro com modo Teste = true e conferir o log antes de excluir de verdade. Exclusão é técnica e irreversível. Nunca apaga o domínio/servidor, só históricos redundantes — sempre sobra pelo menos 1 versão. Mensagem de \"Authorization expirado\" pode, na real, ser só \"nenhum domínio bateu com o filtro\" — checar período/domínio antes de recapturar token."},
+            { system: "folha", type: "alteracao", title: "Alterar Vínculo Empregatício em Todos os Históricos da Matrícula", key: "38001164-dfba-4a6f-9cb2-f1a1357701e8", date: "2026-07-17", description: "Percorre todos os históricos de uma matrícula e altera o vinculo Empregatício para um novo ID. Modos REVISAR/ALTERAR." },
+            { system: "folha", type: "consulta", title: "Listagem de eventos retornam valor de um outro evento", key: "08cc158a-d79b-4bc7-903c-9a541537a419", date: "2026-07-09", description: "Gera uma listagem CSV com os eventos que possuem dependência direta com outros eventos. Utiliza-se a chamada de função Eventos.valor()" },
+            { system: "folha", type: "relatorio", title: "Relatório da Tela de Matrículas", date: "2026-07-08", fonte: "473e0050-1167-4517-be61-39aac1eff65c", relatorio: "31c2a4fc-c88f-4e86-8155-49b8c3c80bfb", description: "O relatório foi desenvolvido para facilitar a consulta dos dados da tela de Histórico de Matrículas, principalmente quando há muitos registros. Ele apresenta as informações no mesmo formato da tela do sistema, com as vigências exibidas lado a lado para facilitar a comparação. Também permite filtrar os dados por período de vigência, situação, matrícula, tipo de matrícula e outros critérios, tornando as consultas mais rápidas e práticas." },
+            { system: "rh", type: "relatorio", title: "Movimentação do histórico de convocação", date: "2026-06-18", fonte: "bcbbb093-9b67-4378-a57d-0ade59301d9c", relatorio: "8fadbaec-7666-42ce-b99b-327e070de1b4", description: "Demonstra a movimentação do candidato na tela de convocação." },
+            { system: "folha", type: "consulta", title: "Gerar informações da matrícula para conferir no SIOPE", key: "e58824ec-72cd-4404-b62f-f4de3d461fb6", date: "2026-06-18", description: "Lista remunerações de tipo FUNCIONARIO com base de cálculo do INSS, salário base, carga horária, cargo e campos adicionais." },
+            { system: "folha", type: "alteracao", title: "Exclusão de Dependentes sem CPF", key: "769889b3-13d7-4791-80b2-e96d7c2e4a22", date: "2026-06-17", description: "Remove dependentes sem CPF via DELETE /dependencia/ (operacao REMOVER) + lote. Filtro opcional por pessoa sem pessoa selecionada, percorre TODAS as pessoas." },
+            { system: "folha", type: "consulta", title: "Dependentes sem CPF - Matrículas Ativas", key: "c40dc00f-32ff-41b2-b6e1-9b533c0feab4", date: "2026-06-17", description: "Lista dependentes sem CPF (pessoa específica ou todas) e gera CSV. Apenas leitura — não altera nada." },
+            { system: "folha", type: "relatorio", title: "Pessoa Física/Matrículas/Eventos Folha X eSocial cloud", date: "2026-06-15", fonte: "e6cdeacf-e769-4667-b473-379c4b3bcef1", relatorio: "6a393db7-6247-4b8a-a75f-03b8ec3442dd", description: "Demonstra inconsistências de campos obrigatórios no eSocial" },
+            { system: "folha", type: "alteracao", title: "Altera Incidência PIS/PASEP", key: "29e6b299-e045-405e-887a-75366aa160f0", date: "2026-06-11", description: "Preencher os dados de incidência do PIS de acordo com os dados de INSS" },
+            { system: "rh", type: "relatorio", title: "Gestão de recrutamento e seleção - Concuso/Processo", date: "2026-06-11", fonte: "fee47565-0e6b-443c-9237-02b4aba0e0a3", relatorio: "23fbda4c-8349-4536-b4a2-509e5da9704b", description: "Emissão dos dados da tela de gestão de recrutamento" },
+            { system: "folha", type: "consulta", title: "Conferência Eventos do Folha X eSocial Enviados com Sucesso", key: "92293ef3-8bd2-4822-bad1-326e9973ea29", date: "2026-06-10", description: "Comparativo das incidências do último histórico da Folha com o ultimo evento enviado com sucesso para o Esocial" },
+            { system: "folha", type: "consulta", title: "Consultar eventos em folha de pagamento - DIRF", key: "e1989e03-237c-404c-a3d7-1dd1cf5309c4", date: "2026-06-05", description: "Exibe o valor de um ou mais eventos mês a mês durante o ano inteiro. Gera CSV com detalhe por matrícula e resumo mensal + total geral." },
+            { system: "folha", type: "consulta", title: "Verificar valor de plano de saúde por ano - DIRF", key: "4bdc337b-6e86-4147-b664-3e106f150dd5", date: "2026-06-05", description: "Lista despesas de plano de saúde do ano completo com filtro opcional por pessoa, saída em CSV." },
+            { system: "esocial", type: "delete", title: "Excluir_Históricos_Domínios", key: "a321efa8-4b08-4b41-9b99-2cbc57840de8", date: "2026-06-02", description: "Excluir domínios. Para casos onde não é necessário enviar folha de remuneração ou pagamento." },
+            { system: "folha", type: "consulta", title: "Conferência Despesas RH x Cálculo Folha", key: "f82638ef-bb74-484e-926c-8a4ea454f62c", date: "2026-05-27", description: "Realiza o De Para das despesas do plano de saúde importadas no RH, com os eventos de despesas calculados em folha. Exporta um CSV ao final de sua execução." },
+            { system: "folha", type: "alteracao", title: "Alterar Número reservista - Com parâmetro por admissão", key: "3dc2cc8d-11f3-4906-be76-2453406fe0b8", date: "2026-05-27", description: "Altera o número do certificado de reservista no cadastro de pessoas. Com parâmetro por admissão." },
+            { system: "rh", type: "consulta", title: "Auditoria de Licença Prêmio sem Avarbação", key: "d1af4b2d-e0a9-40db-95ac-f525bb83c0e3", date: "2026-05-26", description: "O script identifica períodos de licença prêmio de servidores ativos onde o campo 'averbacao' dentro do array 'composicoes' está nulo." },
+            { system: "rh", type: "alteracao", title: "[Plano de Saúde - SÃO JOSÉ] Cadastrando plano de saúde através do arquivo de importação padrão", key: "d12001da-2d4a-46c3-adc0-74b89d9f4f77", date: "2026-05-22", description: "Valida os dados dos registros do arquivo de importação do SÃO JOSÉ, validando tanto os titulares quanto os dependentes. Caso o registro lido no arquivo não existir como um benefício no sistema, este será automaticamente cadastrado durante a execução do script, caso não for possível este será retornado em um planilha CSV para cadastro manual. Lembrando que este script é exclusivo para o layout do SÃO JOSÉ." },
+            { system: "rh", type: "alteracao", title: "[PLANO SÃO JOSÉ] Importação de despesas de planos de saúde", key: "754199f9-5429-4bc1-af44-4f7fd5f10bd3", date: "2026-05-22", description: "Realiza a importação das despesas do plano de saúde oriundos do SÃO JOSÉ. Lembrando que o layout do SÃO JOSÉ é diferente da UNIMED, sendo necessário scripts diferentes para a importação." },
+            { system: "rh", type: "consulta", title: "Procura matriculas vinculadas a um concurso/processo seletivo", key: "5e7dbafb-4ce5-49cd-b090-3d56b537e1b0", date: "2026-05-21", description: "Busca todas as matriculas que estão com esse concurso/processo seletivo vinculados." },
+            { system: "rh", type: "alteracao", title: "[Plano de Saúde - UNIMED] Cadastrando plano de saúde através do arquivo de importação padrão", key: "390cdd7f-aa50-447e-a4ab-9f65a13b872d", date: "2026-05-19", description: "SOMENTE UNIMED - Realiza a validação dos dados cadastrados no sistema com o arquivo de importação de MENSALIDADES, realizando o cadastro do benefício do plano de saúde e/ou alterando a carteira de identificação caso estiver divergente com a do arquivo." },
+            { system: "folha", type: "delete", title: "[ALTERAÇÃO] Remove TAG de pagamento anterior nas folhas complementares", key: "8ad53a68-1fb7-4d21-97e4-c4cb1db91b79", date: "2026-05-19", description: "Remove a TAG de pagamento anterior de uma folha complementar, atribuindo NULL aos campos referente a pagamentoAnterior. Excluindo qualquer dependência com a mesma." },
+            { system: "rh", type: "alteracao", title: "[LICENÇA PRÊMIO] Averbando todos os períodos aquisitivos .API TELA", key: "12b881fa-1681-437b-8e87-06bff4b372a9", date: "2026-05-19", description: "Realiza a averbação de períodos aquisitivos de licença prêmio. Executa via API de tela, sendo necessário resgatar o Authorization e o User-Access." },
+            { system: "folha", type: "delete", title: "Remove o 'Ver Detalhes' dos eventos de pensão que são REPLICAS", key: "6ac360ae-c55c-4538-9e54-491cdf423aa0", date: "2026-05-19", description: "O script remove o 'Ver Detalhes' dos eventos de pensão que são REPLICAS. Réplicas não deve receber rateio, apenas o evento calculado em férias ou na mensal (que não sejam réplicas)." },
+            { system: "folha", type: "alteracao", title: "Alterar Data de vigência do Cargo - Replace", key: "70107af8-f33b-4077-9ddc-7e5c84230bd5", date: "2026-05-18", description: "Este script irá alterar a data do histórico do cargo, conforme passado em parâmetro." },
+            { system: "folha", type: "relatorio", title: "Relatório de servidores por período de vínculo", date: "2026-05-12", fonte: "5e903ed5-c6b7-40f6-9971-c6116fda428b", relatorio: "159cef2f-f122-4a8d-8aa4-5730db842e99", description: "Relatório para listagem de servidores que tiveram movimentações em um certo período informado. Inclua-se ativos e demitidos (com data de demissão). O mesmo também traz os dados do histórico da época." },
+            { system: "ponto", type: "alteracao", title: "Alterar Ocorrência do Ponto - Por dia de apuração", key: "338b139f-2bcc-4492-b8c7-eb1062f2649f", date: "2026-04-20", description: "Script desenvolvido com o objetivo de substituir uma ocorrência por outra, conforme a necessidade do cliente, utilizando as informações fornecidas por parâmetro." },
+            { system: "ponto", type: "delete", title: "Deletar Afastamento - Classificação Falta", key: "228c8a85-cf57-4d8a-9b39-77186467620b", date: "2026-04-20", description: "Deleta afastamento com classificação falta conforme data informada por parâmetro." },
+            { system: "rh", type: "consulta", title: "[ADICIONAIS] Levantamento dos períodos aquisitivos", key: "024afb65-ab15-4555-b350-60216e8005a7", date: "2026-04-17", description: "Listagem de todos os períodos aquisitivos ativos de adicionais." },
+            { system: "rh", type: "alteracao", title: "[ADICIONAIS] Deletando todos os períodos aquisitivos", key: "e289eae4-0cef-47ff-b52b-2b5f7cc6b4cf", date: "2026-04-17", description: "Deleta todos os períodos aquisitivos de adicionais. Realizando-os em lotes de 50 requisições." },
+            { system: "rh", type: "consulta", title: "[ADICIONAIS] Averbando todos os períodos aquisitivos .API TELA", key: "1049e4ba-b16e-439d-9e07-d9918b21d677", date: "2026-04-17", description: "Averba todos os períodos que não se encontram averbados. Aviso: Este script utiliza API de tela. Necessário pegar o Authorization e User-Access no F12." },
+            { system: "folha", type: "alteracao", title: "[CORREÇÃO] - Atualiza eventos de pensão em folha acrescentando o link 'Ver detalhes'", key: "3f9865e5-ad15-43f3-98cf-7921a49d7fcc", date: "2026-04-09", description: "Insere a função ver detalhes em folhas já calculadas e fechadas. Processo necessário para o correto rateio da pensão no domínio de pagamento do eSocial." },
+            { system: "folha", type: "alteracao", title: "Consignet - Importar para variável - Matrícula com ou sem contrato", key: "f911faed-e57f-4dd3-953e-616b1f444bfa", date: "2026-04-09", description: "Script criado para casos em que a entidade tem as 2 situações. Matrículas com contrato e matrículas sem contrato." },
+            { system: "folha", type: "relatorio", title: "Relatório de raça por competência", date: "2026-04-07", fonte: "edcdd904-6e5c-41df-b0f9-562ccb0091b1", relatorio: "dd266ddc-4ea9-4572-8bdc-80164b50beae", description: "Trata-se de um relatório que apresenta as informações de matrícula, nome, cargo, cargo comissionado e raça, com agrupamento por competência e por raça, além de um totalizador da quantidade de matrículas por competência e também por raça em cada competência." },
+            { system: "folha", type: "alteracao", title: "Ajusta campo adicional conforme 1º classe e referência do nível", key: "c38e9a0d-3c21-404e-bbed-39893fbd68a2", date: "2026-03-18", description: "Altera o conteúdo de um campo adicional, alimentando este com o valor da 1º classe/referência do nível salarial do servidor filtrado. O ID do campo adicional é inserido manualmente no código do script, através da variável 'final String ID_CAMPO_ADICIONAL'" },
+            { system: "ponto", type: "implantacao", title: "Migrar Ocorrências do Ponto", key: "834e138c-6bf7-41e8-99f4-793e3d3a8534", date: "2026-03-18", description: "Migra Ocorrências de uma base Origem para uma destino. IMPORTANTE: O Script deve rodar na base Origem!" },
+            { system: "folha", type: "implantacao", title: "Deletar Eventos", key: "6ed5490f-a366-496c-98ee-86ac51b842ee", date: "2026-03-18", description: "Deleta todos os eventos da base. Limpeza dos eventos, para casos de implantação tipo inclusão." },
+            { system: "ponto", type: "implantacao", title: "Excluir todas as ocorrências", key: "c79c3a9d-99c4-451f-86f8-96a657e8f7b7", date: "2026-03-18", description: "O script deleta todas as ocorrência, utilizado em implantações tipo inclusão." },
+            { system: "folha", type: "consulta", title: "Folhas migradas - Filtro por usuário de cálculo .csv", key: "23d1e4ff-7e9a-4e18-a518-ee32fb57d944", date: "2026-03-17", description: "Gera um .csv com as folhas filtradas por usuário de cálculo." },
+            { system: "folha", type: "delete", title: "Limpa Fonte Genérica", key: "7a8cb2d0-4260-40e7-a6f1-58428f66009c", date: "2026-03-16", description: "Limpa Fonte Genérica com base em um identificador." },
+            { system: "folha", type: "consulta", title: "Verificação de evento na conf. Dirf", key: "f3f2fe22-67c8-4b14-8677-3249079951ee", date: "2026-03-16", description: "Localiza se o evento está adicionado em alguma categoria dentro da configuração da dirf." },
+            { system: "folha", type: "alteracao", title: "Insere afastamento matricula", key: "3dcb43da-4b3f-4a27-b6cc-dd4f6fdbf513", date: "2026-03-16", description: "Realiza inserção de afastamentos conforme data, tipo de afastamento e decorrente para uma matricula." },
+            { system: "folha", type: "consulta", title: "Planilha para os setores verificarem o valor lançado de um evento X valor autorizado", key: "b79760d1-a0d1-4752-a916-8499d839d362", date: "2026-03-13", description: "a seguinte finalidade: após fechamento do ponto, quando o ponto integrado com a folha, essa planilha servirá para verificar o que foi feito de horas extras por exemplo com o que é autorizado a pagar, ex: servidor fulano fez 60 horas, ai o cliente irá preencher quando é autorizado, ex: 40 horas, posteriormente pode ser feita a importação com o script padrão: Importação de Lançamentos de Variáveis, especificando a coluna de valor Autorizado." },
+            { system: "folha", type: "consulta", title: "Planilha para os setores informar o valor das variáveis", key: "af881a80-7ec2-4d78-ae44-ab39116fbea3", date: "2026-03-13", description: "criamos um script para o setor de rh enviar para os demais setores informar o valor das variáveis em planilha para posterior importação com o script padrão: Importação de Lançamentos de Variáveis" },
+            { system: "folha", type: "alteracao", title: "Cargos sem remuneração - Cargos o níveis salariais", key: "e5e737bb-fe7f-415b-ad4c-e3018cbc3525", date: "2026-03-13", description: "Adicionar nível do cargo, é verificado os cargos de matrículas ativas." },
+            { system: "folha", type: "alteracao", title: "Alterar a data do primeiro histórico do nível - Cargos o níveis salariais", key: "5beeee57-da89-4b93-b8fd-173b1de79e8d", date: "2026-03-13", description: "Este script altera a data do menor histórico dentro do nível salarial para '01/01/1900'. Ele pega pela informação que está preenchida no cadastro das matrículas ativas." },
+            { system: "folha", type: "alteracao", title: "Cargos de matrículas ativas - Tira nível repetido - Cargos o níveis salariais", key: "757d5855-6fc9-4356-865f-c57f99af4a92", date: "2026-03-13", description: "Deleta nível duplicado dentro do cargo." },
+            { system: "folha", type: "consulta", title: "Cargo e nível vinculado ao cargo - Cargos o níveis salariais", key: "8c71c9df-e754-4643-ae85-d082cad78781", date: "2026-03-13", description: "Gera arquivo .csv com os cargos e níveis das matrículas ativas." },
+            { system: "folha", type: "consulta", title: "Alterar Número reservista - Cadastro Pessoas", key: "dd44932b-d35a-4f72-bb8e-2cf905ff8d64", date: "2026-03-09", description: "Gera um .csv da informação atual do campo Número de reservista, no cadastro de pessoas." },
+            { system: "folha", type: "alteracao", title: "Alterar Número reservista - Cadastro Pessoas", key: "d0760331-d2d2-4994-874b-a3342b4cbd32", date: "2026-03-09", description: "Altera o número do certificado de reservista no cadastro de pessoas." },
+            { system: "folha", type: "implantacao", title: "Migrar Médias e vantagens", key: "340cbda1-dc16-41cf-b1cf-535e325d6543", date: "2026-03-06", description: "Rodar o script na entidade origem. Este script necessita do token de migração da destino, token e user-acess da API de tela da entidade destino."},
+            { system: "folha", type: "implantacao", title: "Migrar Motivos de rescisão", key: "8ac4da8c-af82-4589-afa8-78f782682c99", date: "2026-03-06", description: "Rodar o script na entidade origem. Utilizado para migrar o motivo de rescisão da entidade origem para uma destino."},
+            { system: "folha", type: "alteracao", title: "Consignet (RETORNO)", key: "7409518c-aaeb-482a-9486-b4d18f90e819", date: "2026-02-10", description: "Utilizado para emprestimos - Empresa Consignet."},
+            { system: "folha", type: "alteracao", title: "Consignet (MARGEM_1)", key: "57076f7f-8d17-4b8d-931a-1989994986b5", date: "2026-02-10", description: "Utilizado para emprestimos - Empresa Consignet."},
+            { system: "folha", type: "alteracao", title: "Consignet (FECHAMENTO)", key: "5d301512-c151-48e0-90c0-65887069948b", date: "2026-02-10", description: "Utilizado para emprestimos - Empresa Consignet."},
+            { system: "folha", type: "implantacao", title: "Migrar Tipos de cargos", key: "a216876f-6356-4745-b160-cd310f49c09a", date: "2026-02-19", description: "Rodar o script na entidade origem. Utilizado para migrar os tipos de cargos da entidade origem para uma destino."},
+            { system: "esocial", type: "delete", title: "Remover domínios S-3000", key: "58ec51bb-0e01-4894-9cd5-b33fde964a26", date: "2026-02-19", description: "Deleta os domínios do evento S-3000, utilizado para casos onde o cliente cadastrou domínios errados e precisa limpar para cadastrar novamente."},
+            { system: "folha", type: "delete", title: "Deletar tipo de afatamento", key: "2b1422f0-d2f2-433d-b110-18e5636544a8", date: "2026-02-18", description: "Deleta todos os tipos de afastamentos cadastrados na base."},
+            { system: "folha", type: "implantacao", title: "Migrar Tipos de afastamento", key: "544057e9-6208-4fcf-98b1-37bf15c11e5b", date: "2026-02-18", description: "Rodar o script na entidade origem. Migra todos os tipos de afastamentos cadastrados na base Origem."},
+            { system: "folha", type: "implantacao", title: "Migrar Tipos de movimentação de pessoal", key: "598b0dcd-83e0-4e83-b080-8231988d4b1a", date: "2026-02-18", description: "Rodar o script na entidade origem. Migra todos os tipos de movimentação pessoal de uma entidade origem para uma destino."},
+            { system: "folha", type: "consulta", title: "Eventos não padrão - gera .csv", key: "7fa453c0-0678-42ac-a91a-eb6e7cf26458", date: "2026-02-17", description: "Gera um .csv com todos os eventos que não estão com a tag 'Padrão'."},
+            { system: "folha", type: "implantacao", title: "Adicionar fórmulas padrões nos eventos", key: "7d55d76c-54e8-4f04-bb3e-2cfd32fd3051", date: "2026-02-17", description: "Utilizado quando for o tipo de implantação INCLUSÃO. Rodar o script na base que deseja atualizar as fórmulas padrões."},
+            { system: "folha", type: "implantacao", title: "Migrar base de uma entidade origem para outra destino", key: "c538ba91-534e-4814-a8e1-479321f2d274", date: "2026-02-17", description: "O script migra as bases de uma entidade para outra. IMPORTANTE: Rodar o script na entidade origem, é a entidade que tem as bases cadastradas."},
+            { system: "folha", type: "implantacao", title: "Migração Eventos CLOUD X CLOUD v2", key: "e61a4170-a1f9-4137-9b9a-6e6b55789319", date: "2026-02-17", description: "O Script deve ser rodado na base Origem. Na versão 2 foi otimizado para migrar todos os eventos."},
+            { system: "folha", type: "delete", title: "Deletar todos os eventos da base", key: "d523e1fd-5360-45b9-bf61-4788f7410e94", date: "2026-02-13", description: "Deleta todos os eventos da base. Limpeza dos eventos, para casos de implantação tipo inclusão."},
+            { system: "folha", type: "consulta", title: "Pessoas sem CPF - Somente quem tem remuneração", key: "776a06b2-5908-4582-bb31-2c1edd86783d", date: "2026-02-13", description: "Gera um .csv com todas as pessoas sem CPF e que tiveram folha de pagamento maior ou igual a competência de 01/2021."},
+            { system: "folha", type: "implantacao", title: "Validação Matrículas Ativas DESKTOP x CLOUD [Leia as instruções dentro do Script]", key: "fb7348fd-2b64-42a0-a736-2c15c6039f2d", date: "2026-02-12", description: "Script utilizado para conferir matrículas do desktop com o cloud."},
+            { system: "folha", type: "implantacao", title: "Ajuste Descrição Eventos [Leia as instruções dentro do Script]", key: "d6f14221-b068-4a23-b881-8d874ceebb8f", date: "2026-02-12", description: "Script utilizado para retirar a descrição dos eventos a tag 'NÃO PADRÃO'."},
+            { system: "folha", type: "implantacao", title: "Migração Fórmula Eventos CLOUD x CLOUD [Leia as instruções dentro do Script]", key: "7d998957-f281-4452-aedb-267891ce3ed0", date: "2026-02-12", description: "Script utilizado para migração de fórmulas de uma entidade origem para uma destino."},
+            { system: "folha", type: "implantacao", title: "Migração Eventos CLOUD X CLOUD [Leia as instruções dentro do Script]", key: "e5dddf71-aa38-4fb7-8806-1668d24981b6", date: "2026-02-12", description: "Script utilizado para copiar eventos de uma entidade origem para uma destino."},
+            { system: "folha", type: "consulta", title: "Listagem de Diárias Lançadas no Contábil para as Matrículas", key: "7324a221-1694-41e1-b6f8-ebeb8a1bae2c", date: "2026-02-12", description: "Retorna .csv com as matrículas encontradas advindas de pagamentos de diárias no sistema Contábil"},
+            { system: "folha", type: "alteracao", title: "Importação de Diárias do Contábil para o RH", key: "795eeb60-9ba1-4b10-b0bf-670a4c145429", date: "2026-02-12", description: "Importa as diárias por competência do sistema Contábil com os valores agrupados por CPF no cadastro de diárias do sistema RH."},
+            { system: "esocial", type: "relatorio", title: "Comprovante de Rendimentos", date: "2026-02-12", fonte: "29fcbd7a-985b-4eb0-9b06-258a836d68ac", relatorio: "40e55cd0-46f7-4af3-a1c5-8a51d0f7c28a", description: "Relatório utiliza exclusivamente os dados de retorno do evento S-5002 do eSocial, inibindo problemas de databases diferentes." },
+            { system: "folha", type: "consulta", title: "Matriculas com problemas no reajuste salarial (API de tela)", key: "43214435-951d-4f31-996a-e26e303aef2c", date: "2026-02-12", description: "Consulta matrículas com erro no reajuste salarial, gerando .csv."},
+            { system: "folha", type: "consulta", title: "Carga Inicial eSocial - gera .csv - API de tela", key: "d3f26917-a917-4fb5-b6b8-8df59f3b4032", date: "2026-02-05", description: "Gera um arquivo .csv com os erros no momento da integração com o eSocial. Principalmente em carga inicial."},
+            { system: "folha", type: "consulta", title: "Valida Líquido Férias - Réplicas Negativas", key: "03e0d545-6ccc-4f2a-9172-1126256aa95a", date: "2026-01-28", description: "Este script é utilizado para a conferência de réplicas de férias. Ele lista todas as folhas que apresentam líquido de férias negativo, facilitando a verificação e análise das folhas de férias."},
+            { system: "folha", type: "alteracao", title: "Alterar a quantidade de vagas", key: "68971427-b777-43e5-9d19-2f8cb4863c3a", date: "2026-01-22", description: "Altera a quantidade de vagas disponíveis a partir de uma planilha para igualar quantidade de vagas ocupadas com as disponíveis"},
+            { system: "folha", type: "consulta", title: "Retorna Vagas Ocupadas X Vagas", key: "2f593955-ba65-4576-809e-c93b7139cb43", date: "2026-01-22", description: "Retorna a quantidade de vagas ocupadas quando a quantidade for maior que o número de vagas disponíveis"},
+            { system: "folha", type: "alteracao", title: "1 - InfoConsig-CADASTRO_DESCONTO_FOLHA", key: "3ca7367b-c005-4dd8-b815-93cb65fbd528", date: "2026-01-15", description: "Script utilizado para a empresa InfoConsig."},
+            { system: "folha", type: "alteracao", title: "2 - InfoConsig-CADASTRO MARGEM SERVIDOR (Matricula)", key: "bfa779fc-39fc-4a1c-874c-60f93db88fc3", date: "2026-01-15", description: "Script utilizado para a empresa InfoConsig."},
+            { system: "folha", type: "alteracao", title: "2 - InfoConsig-CADASTRO MARGEM SERVIDOR (Matricula) - Por Situação", key: "2721af41-a88b-4f99-8fa0-e11fa858ab60", date: "2026-01-15", description: "Script utilizado para a empresa InfoConsig."},
+            { system: "folha", type: "alteracao", title: "3 - InfoConsig-CADASTRO PESSOAS", key: "2b287f80-0b07-4d29-98e6-ec48b5e6c277", date: "2026-01-15", description: "Script utilizado para a empresa InfoConsig."},
+            { system: "folha", type: "alteracao", title: "3 - InfoConsig-CADASTRO PESSOAS - Por Situação", key: "4e0c6f86-6eb9-438c-a59f-2efdd32ae5f1", date: "2026-01-15", description: "Script utilizado para a empresa InfoConsig."},
+            { system: "folha", type: "alteracao", title: "4 - InfoConsig-CADASTRO SERVIDOR", key: "d818e1cf-ae00-4da7-beaf-7e69f1d1bc5a", date: "2026-01-15", description: "Script utilizado para a empresa InfoConsig."},
+            { system: "folha", type: "alteracao", title: "4 - InfoConsig-CADASTRO SERVIDOR - Por Situação", key: "c9fa65af-cb17-4a08-aa93-6d44d54c7053", date: "2026-01-15", description: "Script utilizado para a empresa InfoConsig."},
+            { system: "folha", type: "alteracao", title: "5 - InfoConsig-RETORNO_DESCONTO_FOLHA", key: "388c8906-380e-438b-82c2-dcc51dd1a376", date: "2026-01-15", description: "Script utilizado para a empresa InfoConsig."},
+            { system: "folha", type: "consulta", title: "Conferência de eventos para o redutor I.R.R.F", key: "acfb3569-5f6c-43c8-8743-20ecbe9e4e80", date: "2026-01-14", description: "Gera um .csv com a listagem dos eventos e qual é incidência que monta base conforme passado por parâmetro."},
+            { system: "folha", type: "alteracao", title: "Código TCE - Inserir '1-' na frente do código - historico-matricula - v2", key: "6fbe2903-9b45-47b4-8347-35a49b46b677", date: "2025-12-11", description: "Adiciona o prefixo ('1-'+código da matrícula) no campo adicional do eSfinge chamado 'Matrícula do Funcionário'. O script adiciona para todos os tipos de matrículas."},
+            { system: "folha", type: "consulta", title: "Código TCE - Inserir '1-' na frente do código - historico-matricula - v2 - gera .csv", key: "3d7cb475-111a-4ff6-bfa2-3399cac2be94", date: "2025-12-11", description: "Gera um .csv para auxiliar na verificação dos dados após rodar o script '[ALTERAÇÃO] Código TCE - Inserir '1-' na frente do código - historico-matricula - v2'."},
+            { system: "folha", type: "alteracao", title: "Configuração de Médias e Vantagens", key: "4da3a66f-1a20-4558-bfec-59044672af5a", date: "2025-12-08", description: "Atualiza os eventos dentro da configuração de médias e vantagens com base nos parâmetros fornecidos"},
+            { system: "folha", type: "alteracao", title: "Código TCE - Inserir '1-' na frente do código - historico-cargo", key: "3642f28f-19c4-4a48-8294-5dfa0ccdb7ea", date: "2025-12-03", description: "Acrescenta o número '1-' no campo adicional do código do cargo para o TCE." },
+            { system: "folha", type: "alteracao", title: "Valida Líquido Férias 11050 - Réplicas Negativas", key: "4351e4df-f7dd-409a-a0ff-6ed8abe4b894", date: "2025-12-01", description: "Este script é utilizado para a conferência de réplicas de férias. Ele lista todas as folhas que apresentam líquido de férias negativo, facilitando a verificação e análise das folhas de férias." },
+            { system: "folha", type: "alteracao", title: "Depara Pagamentos - Líquido", key: "67c1cc29-ca13-4a2e-a5c1-6cbe966bbf3b", date: "2025-12-01", description: "Este script é utilizado para facilitar a conferência das folhas calculadas. Com ele, você realiza uma consulta no Desktop, extrai os dados e importa aqui no script, que fará automaticamente o de/para do valor líquido." },
+            { system: "folha", type: "alteracao", title: "Cria um novo evento a partir de uma lista a copiar", key: "43a1bf03-6c0a-4589-aa31-496b11745f1e", date: "2025-12-01", description: "Copia eventos a partir de uma faixa informada por parâmetro, mantendo todas as informações do evento copiado." },
+            { system: "folha", type: "delete", title: "Deleta Lançamento de Variáveis", key: "3c047e48-1fe1-434c-839b-4a9f0ef2bfd9", date: "2025-12-01", description: "Deleta os lançamentos de variáveis por competência e evento" },
+            { system: "folha", type: "consulta", title: "Análise Composição de Bases IRRF", key: "186a545e-7a3d-43fe-b59a-f0242ad81399", date: "2025-12-01", description: "Retorna .csv contendo eventos que compõem para mais de uma base de IRRF no mesmo processamento" },
+            { system: "folha", type: "alteracao", title: "Correção de Folha de 13° Integral Adiantado", key: "839f4173-f1a5-48b2-b7db-c07cf5ab9e4f", date: "2025-12-01", description: "Insere eventos informativos com base no total líquido ou total desconto da folha calculada no 13° integral adiantado" },
+            { system: "folha", type: "alteracao", title: "Importação de Diárias RH", key: "4806cade-66a7-4fe3-b32d-b26dc0afa32f", date: "2025-12-01", description: "Importa as diárias por competência do sistema Contábil com os valores agrupados por CPF no cadastro de diárias do sistema RH" },
+            { system: "folha", type: "alteracao", title: "Inserir Evento em Folha", key: "be7add92-e531-4b59-88ec-6b8a68070c10", date: "2025-12-01", description: "Insere evento (sem bases) em folha de pagamento alterando o valor líquido correspondente" },
+            { system: "folha", type: "alteracao", title: "Altera Evento, Bases e Classificação da Folha - Ler .csv", key: "07f3cda3-9119-43d2-9cc4-124e161dbf47", date: "2025-12-01", description: "Altera o evento na folha, bases e classificação sem mudar valores." },
+            { system: "folha", type: "alteracao", title: "Gerador de Seleção Avançada - Por Código", key: "b955bc13-83ce-4233-925c-d3027c555a1c", date: "2025-11-26", description: "Adiciona os códigos de matrículas ou organograma em uma seleção avançada já existente." },
+            { system: "folha", type: "consulta", title: "Bases de Eventos", key: "98d33b04-28e4-4b47-b7e3-3f47f235e4c1", description: "Consulta em todas as fórmulas se existe a base informada por parâmetro." },
+            { system: "folha", type: "consulta", title: "Campos Adicionais dos Eventos - Gerar CSV", key: "76c8d03a-2534-49b3-8860-58ea0fbe3c61", date: "2025-11-20", description: "Script é utilizado no ambiente 'A' para importar em um ambiente 'B', criando um csv com as informações de todos os campos adicionais dos eventos. Script onde é utilizado o .csv: [ALTERAÇÃO] Campos Adicionais dos Eventos - Ler .csv" },
+            { system: "folha", type: "alteracao", title: "Campos Adicionais dos Eventos - Ler CSV", key: "b54a04a8-7fc3-426a-8b00-89b34056b3e2", description: "IMPORTANTE: Verificar os IDs do identificador 'padrao' no script (muda de base para base o id). Upar o arquivo .csv gerado pelo script: [CONSULTA] Campos Adicionais dos Eventos - Gerar um .csv" },
+            { system: "folha", type: "consulta", title: "Conferir organogramas das matrículas - CSV", key: "518c6251-cad5-47dc-b7cb-b640ed8f8325", description: "Gera um .csv dos organogramas das matrículas com a situação diferente de demitido." },
+            { system: "folha", type: "consulta", title: "Data de Nascimento dependentes .csv", key: "ca078bd7-0a56-4549-8f71-483da73d52ea", description: "Gera um .csv de dependentes, das matrículas ativas." },
+            { system: "folha", type: "consulta", title: "Evento no lançamento de eventos - Verificando folha de pagamento", key: "32acf3b2-dd0a-42eb-8d22-573782ca8dd3", description: "Este script consulta eventos na folha de pagamento, conforme a competência e código do evento lançado nos parâmetros. O script já gera com o campo de data inicial e final para em seguida só jogar no lançamento de variáveis se desejar." },
+            { system: "folha", type: "consulta", title: "Fórmulas padrões", key: "e263b1f0-b64d-4161-82f9-4ac1d6487d12", description: "Gera o arquivo com as fórmulas padrões atuais, será gerado já no formato utilizado para migrar do desktop para cloud." },
+            { system: "folha", type: "consulta", title: "Fórmulas padrões - Arquivo Único", key: "69bd28c2-379f-4941-9068-223e1c1e8f11", description: "Gera um arquivo único, com todas as fórmulas padrões atuais." },
+            { system: "folha", type: "consulta", title: "Lista de Eventos - csv", key: "8142d90b-d7c3-48f4-9572-4568b5496305", description: "Gera um arquivo .csv, com todos eventos cadastrados na entidade." },
+            { system: "folha", type: "consulta", title: "Localizar CPF no cadastro de Pessoas", key: "4db254f2-db3a-4a1f-99ed-cae5f9d849d1", description: "Localiza o CPF da pessoa, informando o nome nos parâmetros." },
+            { system: "folha", type: "consulta", title: "Matrículas Sem CPF - Histórico Atual", key: "96d134ab-5ed6-4890-ad2b-1725642d670c", description: "Gera um .txt, com as matrículas que estão sem CPF. O script verifica somente matrículas ativas e o histórico atual." },
+            { system: "folha", type: "consulta", title: "Matrículas calculadas", key: "34d4b7e1-009b-4c70-9701-08690a242cb1", description: "Monta um .txt, com as matrículas de todas as pessoas calculadas na competência informada por parâmetro. Utilizado para criar seleções avançadas." },
+            { system: "folha", type: "consulta", title: "Ocorrências SEFIP - Cadastro de funcionários - Todos os históricos", key: "1aad5388-e0e7-4634-902a-4cd4a1da3f68", description: "Gera um .csv, com o valor informado na ocorrência SEFIP da matrícula. Somente matrículas ativas." },
+            { system: "folha", type: "consulta", title: "Pessoas sem PIS", key: "2442ec9c-6135-4bc7-8eb0-cf6860a17884", description: "Consulta pessoas sem CPF, matrículas ativas e diferente de Autonomos. Não gera arquivo." },
+            { system: "folha", type: "consulta", title: "Salva Fórmulas v2.0", key: "5382a25c-0ee8-492e-8b43-7bf7b50ae798", description: "Salva todas as fórmulas dos eventos da entidade, utilizado para deixar como forma de backup pós-implantação. Aconselhável deixar um agendamento automático." },
+            { system: "folha", type: "consulta", title: "Tipo de conta - Cadastro de Pessoas", key: "b9c6b48d-b4fd-4211-8f26-5aad71d2b3c9", description: "Gera um .csv, com o tipo de conta cadastrado no cadastro de pessoas. O script irá verificar pelas folhas calculadas, conforme competência informada por parâmetro." },
+            { system: "folha", type: "alteracao", title: "Consulta telefone sem descrição e marca como principal", key: "664b79f6-a6b7-49c8-b050-0914c93430ef", description: "O Script ajusta telefones sem descrição e coloca como principal. Ajuste realizado somente com alinhamento do cliente." },
+            { system: "folha", type: "alteracao", title: "Alterar Configuração de Média e vantagens para integralizar 'SIM' ou 'NÃO'", key: "f5a22346-c16f-497d-ac59-7b3c8751fc86", description: "Altera a opção de integralizar da configuração de médias e vantagens. Informando o evento e a opção de 'SIM' ou 'NÃO' nos parâmetros." },
+            { system: "folha", type: "alteracao", title: "Alterar Data Fim Autonomos", key: "9d6be123-109c-422b-bcec-8475cc867754", description: "O script inativa o tipo de matrícula 'AUTÔNOMO'." },
+            { system: "folha", type: "alteracao", title: "Alterar Registra Ponto para 'false' no sistema folha", key: "23001bdc-d362-4c66-b0c3-050ef8879ef0", description: "Este script é utilizado para casos em que o cliente não tem o sistema do ponto cloud na entidade. Sendo assim não tem a necessidade de estar marcado o Registra Ponto dentro da API." },
+            { system: "folha", type: "alteracao", title: "Alterar Tipo de cargo - Cadastro de Cargo - Todos os históricos", key: "690e529a-efbf-4e3e-b5f3-17b95f56df75", description: "" },
+            { system: "folha", type: "alteracao", title: "Alterar dependentes de IRRF - Alterar para False", key: "6a53697a-dbf5-4256-b0c3-ee475eac82c4", description: "" },
+            { system: "folha", type: "alteracao", title: "Alterar dependentes de IRRF - Alterar para true", key: "1301e5a5-b52a-4889-a311-5c271c7a0182", description: "" },
+            { system: "folha", type: "alteracao", title: "Alterar dependentes de salário família", key: "30038ad7-0031-4621-aa98-5600a72b8ae1", description: "" },
+            { system: "folha", type: "alteracao", title: "Alterar fórmula do Evento", key: "c02107ee-774a-422b-942b-f2b271cce637", description: "" },
+            { system: "folha", type: "alteracao", title: "Alterar opção de FGTS no cadastro de matrícula", key: "d4ef3b7c-600b-415c-860d-92408e1037d3", description: "" },
+            { system: "folha", type: "alteracao", title: "Campo Adicional SIAP - Eventos", key: "1bcefee2-4c8c-40ad-ac82-950fbd2807e2", description: "" },
+            { system: "folha", type: "alteracao", title: "Campo Adicional SIAP - Matrículas", key: "68f0dc79-0c5c-46be-8335-77932b753b42", description: "" },
+            { system: "folha", type: "alteracao", title: "Colocar conta principal na matrícula - Cadastro de matrículas", key: "354cb672-21b7-4601-8f80-61348cffc6a3", description: "" },
+            { system: "folha", type: "alteracao", title: "Conta Bancária das matrículas - Marcar como principal no cadastro de pessoas", key: "1b446aba-3642-4f0c-97a7-6fa2cc4745f4", description: "" },
+            { system: "folha", type: "alteracao", title: "Código TCE - Inserir '1-' na frente do código - historico-cargo", key: "8c03bfab-d743-4ea6-89e2-1f74bb081dab", description: "" },
+            { system: "folha", type: "alteracao", title: "Código TCE - Inserir '1-' na frente do código - historico-matricula", key: "c80f6fd4-8d2e-4c09-8cd8-20525bbc0047", description: "" },
+            { system: "folha", type: "delete", title: "Excluir CPF, PIS e RG do histórico da pessoa", key: "ac73eef5-6642-4374-9e68-26e8905c79da", description: "" },
+            { system: "folha", type: "alteracao", title: "Lançar variáveis do mês anterior no mês atual", key: "2e3ab0f3-d4c1-4a7b-909c-a173fe66dba6", description: "" },
+            { system: "folha", type: "alteracao", title: "Matrículas Ativas - Seleção Avançada", key: "a0a20b70-572a-4982-aae6-699063a289bc", description: "" },
+            { system: "folha", type: "alteracao", title: "Motivo de Rescisão - Alterar nos eventos de rescisão", key: "45554a9a-41a6-4b0d-b5e3-5701ac8f2315", description: "" },
+            { system: "folha", type: "alteracao", title: "Natureza da rubrica - Ler .csv", key: "068aa014-0eee-4cb4-86af-97dd34d19812", description: "" },
+            { system: "folha", type: "alteracao", title: "Número de rua que está 'S/N' para '00'", key: "bce10b37-f78a-4fb9-9fda-7b1582e9e14e", description: "" },
+            { system: "folha", type: "alteracao", title: "Organograma de Matricula", key: "2c8192d4-ff31-4dc1-9c55-5b6d00c5b0aa", description: "" },
+            { system: "folha", type: "alteracao", title: "Situação de Matrícula", key: "626971a6-b6a1-4651-aa33-6e1e5969e815", description: "" },
+            { system: "folha", type: "alteracao", title: "Tipo de conta - Cadastro de Pessoas", key: "b487600d-083d-471a-a1c3-c653d3366a84", description: "" },
+            { system: "folha", type: "consulta", title: "Matrículas ativas - gerar .csv", key: "ef5e0418-c482-4c4c-8a2b-964725ee017a", description: "" },
+            { system: "folha", type: "consulta", title: "MATRICULAS SEM CPF .CSV - Todos os históricos", key: "a858fdbd-c116-4909-a056-5aca0612d0e5", description: "" },
+            { system: "folha", type: "consulta", title: "Eventos de férias com movimentação em folha sem réplica - 2.0", key: "6fc26ff8-66ee-409d-9bc2-b36c1a5a0238", description: "" },
+            { system: "folha", type: "consulta", title: "Verifica período aquisitivo com problemas - gera .csv - API de tela", key: "dd121292-b3e2-45e9-9257-c533218be785", description: "" },
+            { system: "folha", type: "alteracao", title: "Datas de início e fim do período aquisitivo", key: "79c26739-adf5-4e47-96d9-2da1d2591f1c", description: "" },
+            { system: "folha", type: "banco", title: "Arquivo de Crédito em Banco - Banco do Brasil 240 v08.8 Oficial", key: "d64e8ad0-dfc9-42bf-9ad8-a0c2873063f0", description: "" },
+            { system: "folha", type: "banco", title: "Arquivo de Crédito em Banco - Caixa Econômica - Padrão FEBRABAN 240 SIACC- NSGD v14 Oficial", key: "d4fd9c88-d552-4730-ae56-9b90fefc5f99", description: "" },
+            { system: "folha", type: "banco", title: "Banco Sicoob Credicampos 200 [Passo de Torres]", key: "a4378e55-9c4e-42be-b295-2a6a15127aca", description: "" },
+            { system: "folha", type: "banco", title: "Arquivo de Crédito em Banco - SICOOB - CNAB 240 - atualizado", key: "684cac77-209b-429d-84aa-21497faa03dd", description: "" },
+            { system: "folha", type: "banco", title: "Arquivo de Crédito em Banco - SICOOB - CNAB 240 - Passos Maia/SC AGRUPADO POR CPF", key: "ddbd1224-cb45-47bd-9138-2dffc04f6331", description: "" },
+            { system: "folha", type: "banco", title: "Componentes Genéricos", key: "b21fc799-3717-4724-9b70-9f737ca79a36", description: "Componente para o arquivo do banco." },
+            { system: "rh", type: "delete", title: "Excluir período aquisitivo de adicionais na matrícula do RH", key: "dbdde82d-6988-4e9d-b9fe-13925df1d104", description: "Script utilizado para excluir todos os períodos aquisitivos de adicionais na matrícula do RH. Na tela de gestão de períodos aquisitivos do RH." },
+            { system: "rh", type: "delete", title: "Excluir período aquisitivo de licença prêmio na matrícula do RH", key: "0d1028cf-0784-4c80-878e-8a72549b6474", date: "2026-01-16", description: "Script utilizado para excluir todos os períodos aquisitivos de licença prêmio na matrícula do RH. Na tela de gestão de períodos aquisitivos do RH." },
+            { system: "ponto", type: "alteracao", title: "Adicionar horário para dia de Folga", key: "7c723477-1c82-49d2-a66c-ad6e5108c66a", description: "" },
+            { system: "ponto", type: "alteracao", title: "Adicionar horário para dia de Folga - Geral", key: "19311c29-e36c-413f-9083-c9a805751855", description: "" },
+            { system: "ponto", type: "alteracao", title: "Adicionar parâmetro do ponto e compensa horas", key: "e9680990-261b-436a-bcb2-17db98c8b691", description: "" },
+            { system: "ponto", type: "alteracao", title: "Altera data início vigência ocorrências", key: "51a08242-f2ff-481e-8def-875b659bff0e", description: "" },
+            { system: "ponto", type: "alteracao", title: "Matrículas e informações relacionados ao ponto (Funcionário e Estagiário)", key: "3c611c25-1ccb-4288-8275-517fe3831708", description: "" },
+            { system: "ponto", type: "alteracao", title: "Matrículas e informações relacionados ao ponto (registra ponto, número do cartão, parâmetro do ponto)", key: "c084bb32-6324-47e0-88a2-6cce65c9074d", description: "" },
+            { system: "ponto", type: "consulta", title: "Número de cartão ponto duplicado", key: "de307c2a-7098-4cdc-877a-c83a20e2e1ff", description: "" },
+            { system: "ponto", type: "consulta", title: "Parâmetro do ponto e compensa horas - Matrículas Ativas", key: "3271749f-d04f-4724-900a-6745d90ad933", description: "" },
+            { system: "ponto", type: "consulta", title: "Salva Fórmulas - Ocorrências do Ponto", key: "0511cecc-6f3d-44f9-867e-f300db9f3be8", description: "" },
+            { system: "esocial", type: "consulta", title: "Conferência Encargos INSS com 5001 eSocial", key: "2aaa3da9-8173-4579-9a00-c588e0b8ed32", date: "2025-12-01", description: "Retorna .csv com a comparação das bases de cálculo e INSS do relatório 5001 com as bases de cálculo e INSS calculados no sistema" },
+            { system: "esocial", type: "consulta", title: "Conferência IRRF Regime Caixa com 5002 eSocial", key: "a0db4994-3c29-4503-a1d6-c58a4e374e96", date: "2025-12-01", description: "Retorna .csv com a comparação das bases de cálculo e IRRF do relatório 5002 com as bases de cálculo e IRRF calculados no sistema" },
+            { system: "esocial", type: "delete", title: "Exclusão de domínios duplicados - eSocial", key: "5709ed46-78c0-4738-88af-aa9d55a3bbcb", date: "2025-12-11", description: "Realiza a exclusão de domínios do seguinte cenário: Versão anterior possuí recibo e está com sucesso, porém existe uma versão vigente aguardando envio (está última será deletada com observação 'Domínio duplicado')." },
+            { system: "esocial", type: "alteracao", title: "Revalidar Domínios", key: "1b342bdb-d557-4794-a621-9f172f56dafb", date: "2025-12-12", description: "Este script tem a funcionalidade de revalidar todos os históricos do domínio informado por parâmetro." }
+
+        ];
+
+        function isNew(dateString) {
+            if (!dateString) return false;
+            const today = new Date();
+            const date = new Date(dateString);
+            const diffDays = (today - date) / (1000 * 60 * 60 * 24);
+            return diffDays <= 10;
+        }
+
+        let showingOnlyNew = false;
+
+        function renderScripts(filteredScripts = scripts) {
+
+            const container = document.getElementById("scripts-container");
+            container.innerHTML = "";
+
+            const systemTitles = {
+                folha: "🧾 Folha Cloud",
+                rh: "👥 RH Cloud",
+                ponto: "⏱️ Ponto Cloud",
+                esocial: "📊 eSocial Cloud"
+            };
+
+            const systems = {};
+            filteredScripts.forEach(s => {
+                if (!systems[s.system]) systems[s.system] = [];
+                systems[s.system].push(s);
+            });
+
+            Object.keys(systems).forEach(sys => {
+                const section = document.createElement("section");
+                section.dataset.system = sys;
+
+                section.innerHTML = `
+                <h2>${systemTitles[sys] || sys}</h2>
+                <div class="scripts">
+                    <div class="scripts-column" id="${sys}-col1"></div>
+                    <div class="scripts-column" id="${sys}-col2"></div>
+                </div>
+            `;
+
+                const col1 = section.querySelector(`#${sys}-col1`);
+                const col2 = section.querySelector(`#${sys}-col2`);
+
+                systems[sys].forEach((s, i) => {
+                    const col = (i % 2 === 0) ? col1 : col2;
+
+                    const novoTag = isNew(s.date)
+                        ? `<span class="tag tag-novo">NOVO!</span>`
+                        : "";
+
+                    col.innerHTML += `
+                    <div class="script-item" data-type="${s.type}">
+                        <span class="tag tag-${s.type}">${s.type.toUpperCase()}</span>
+                        ${novoTag}
+                        
+                        <div class="script-title">${s.title}</div>
+
+                        <div class="export-key">
+
+                            ${s.key ? `
+                                <div style="margin-bottom:6px;">
+                                    🔑 Chave:
+                                    <span class="inline-code" id="key-${s.key}">${s.key}</span>
+                                    <button class="copy-btn" onclick="copyKey('key-${s.key}', this)">📝 Copiar</button>
+                                </div>
+                            ` : ""}
+
+                            ${s.fonte ? `
+                            <div style="margin-bottom:6px;">
+                                📌 Fonte:
+                                <span class="inline-code" id="fonte-${s.key}">${s.fonte}</span>
+                                <button class="copy-btn" onclick="copyKey('fonte-${s.key}', this)">📝 Copiar</button>
+                            </div>
+                            ` : ""}
+
+                            ${s.relatorio ? `
+                            <div>
+                                Relatório:
+                                <span class="inline-code" id="relatorio-${s.key}">${s.relatorio}</span>
+                                <button class="copy-btn" onclick="copyKey('relatorio-${s.key}', this)">📝 Copiar</button>
+                            </div>
+                            ` : ""}
+
+                        </div>
+
+                        ${s.description ? `
+                            <div class="toggle-desc" onclick="toggleDescription(this)">▼ Descrição</div>
+                            <div class="description-box">${s.description}</div>
+                        ` : ""}
+                    </div>
+                `;
+                });
+
+                container.appendChild(section);
+            });
+
+            const newCount = countNewScripts(filteredScripts);
+
+const notification = document.getElementById("notification");
+
+if (newCount > 0) {
+    notification.style.display = "block";
+
+    notification.innerHTML = `
+🆕 
+<span id="toggle-new" 
+style="cursor:pointer; text-decoration: underline; font-weight:bold;">
+    ${
+        showingOnlyNew
+        ? "Mostrar todos os scripts/relatórios"
+        : `${newCount} atualização(ões) recente(s) nos últimos 10 dias`
+    }
+</span>
+`;
+
+    document.getElementById("toggle-new").onclick = toggleNewFilter;
+
+} else {
+    notification.style.display = "none";
+}
+
+function toggleNewFilter() {
+
+    if (showingOnlyNew) {
+        showingOnlyNew = false;
+        applyFilters(); // volta todos respeitando os filtros atuais
+    } else {
+        showingOnlyNew = true;
+
+        const filtered = scripts.filter(s => isNew(s.date));
+        renderScripts(filtered);
+    }
+
+}
+
+
+        }
+
+        function countNewScripts(list) {
+            return list.filter(s => isNew(s.date)).length;
+        }
+
+        renderScripts();
+
+        function applyFilters() {
+            const searchText = document.getElementById("search").value.toLowerCase();
+            const filterSystem = document.getElementById("filter-system").value;
+            const filterType = document.getElementById("filter-type").value;
+
+            const filtered = scripts.filter(s => {
+                const matchSearch = [
+    s.title,
+    s.type,
+    s.key,
+    s.fonte,
+    s.relatorio
+]
+    .filter(Boolean)
+    .some(field => field.toLowerCase().includes(searchText));
+
+
+                const matchSystem = filterSystem ? s.system === filterSystem : true;
+                const matchType = filterType ? s.type === filterType : true;
+
+                return matchSearch && matchSystem && matchType;
+            });
+
+            renderScripts(filtered);
+        }
+
+        document.getElementById("search").addEventListener("input", applyFilters);
+        document.getElementById("filter-system").addEventListener("change", applyFilters);
+        document.getElementById("filter-type").addEventListener("change", applyFilters);
+
+        function toggleDescription(el) {
+            const box = el.nextElementSibling;
+            const open = box.style.display === "block";
+            box.style.display = open ? "none" : "block";
+            el.innerText = open ? "▼ Descrição" : "▲ Ocultar";
+        }
+
+        function copyKey(id, btn) {
+            const text = document.getElementById(id).innerText;
+            const temp = document.createElement("textarea");
+            temp.value = text;
+            temp.style.position = "fixed";
+            temp.style.opacity = "0";
+            document.body.appendChild(temp);
+
+            temp.select();
+            document.execCommand("copy");
+            temp.remove();
+
+            btn.innerText = "✔️ Copiado!";
+            setTimeout(() => btn.innerText = "📝 Copiar", 1400);
+        }
+
+        function goToForm() {
+            window.open("https://docs.google.com/forms/d/e/1FAIpQLScb2sgTrBW83JuW9PmZuH78DQeU5mJqFmVGLTGd-ekAHkLKaw/viewform", "_blank");
+        }
+
+    </script>
+
+    <hr>
+    <footer style="text-align:center; margin-top:40px; color:#505070; font-size:0.7rem; letter-spacing:2px; position:relative; z-index:1;">Desenvolvido por Nicolas Durante</footer>
+
+</body>
+
+</html>
