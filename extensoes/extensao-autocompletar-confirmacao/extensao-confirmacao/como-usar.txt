@@ -1,0 +1,41 @@
+1. Acesse a página de extensões
+Na barra de endereços do Chrome, digite:
+
+chrome://extensions/
+
+2. Ative o Modo do Desenvolvedor
+No canto superior direito da página, habilite a opção "Modo do desenvolvedor".
+
+3. Carregue a extensão
+Clique em "Carregar sem compactação".
+
+4. Selecione a pasta da extensão
+Escolha a pasta descompactada da extensão e confirme a seleção.
+
+5. Confirme a instalação
+Após selecionar a pasta, a extensão deverá aparecer na lista de extensões do Chrome e estará pronta para uso.
+
+Alternativa: Utilizar pela barra de favoritos
+
+Caso não seja possível instalar ou utilizar a extensão, você pode utilizar a funcionalidade por meio de um favorito (bookmark) do Chrome.
+
+1. Exiba a barra de favoritos
+Caso ela não esteja visível, pressione Ctrl + Shift + B.
+
+2. Adicione um novo favorito
+Clique com o botão direito sobre a barra de favoritos e selecione "Adicionar página...".
+
+3. Configure o favorito
+
+Nome: informe o nome que desejar.
+URL: cole o código fornecido abaixo.
+
+javascript:(function(){const elements=document.querySelectorAll('strong.ng-binding');const codigo=elements[1]?.textContent?.match(/"([^"]+)"/)?.[1]??elements[2]?.textContent?.match(/"([^"]+)"/)?.[1];const input=document.querySelector('input[ng-model="vm.stringConfirmacao"]');if(codigo&&input){input.value=codigo;const ng=window.angular?.element(input).controller('ngModel');if(ng){ng.$setViewValue(codigo);ng.$render();}input.dispatchEvent(new Event('input',{bubbles:true}));input.dispatchEvent(new Event('change',{bubbles:true}));alert('Código preenchido: '+codigo);}else if(!codigo){alert('Código não encontrado.');}else{alert('Campo não encontrado.');}})();
+
+
+4. Salve o favorito
+Clique em "Salvar".
+
+5. Utilize a funcionalidade
+Sempre que estiver na tela desejada, clique no favorito criado para executar a ação automaticamente.
+

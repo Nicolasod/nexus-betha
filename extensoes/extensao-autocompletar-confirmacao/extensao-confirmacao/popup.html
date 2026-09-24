@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="author" content="Rafael da Silva Fernandes">
+  <meta name="description" content="Extensão Chrome para auxiliar em operações do eSocial">
+  <meta name="creator" content="Rafael da Silva Fernandes">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      width: 280px;
+      padding: 1px;
+      background: #0861FF;
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+    }
+
+    .card {
+      background: #fff;
+      padding: 0px 28px 5px;
+      width: 100%;
+      text-align: center;
+      position: relative;
+    }
+	
+
+    #btn {
+      width: 100%;
+      padding: 18px 0;
+      background: #0861FF;
+      color: #fff;
+      border: none;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: opacity 0.15s, transform 0.1s;
+      
+    }
+
+    #btn:hover {
+      opacity: 0.88;
+	  background: #3e7ff3;
+    }
+
+    #btn:active {
+      transform: scale(0.97);
+    }
+
+    #status {
+      font-size: 11px;
+      min-height: 16px;
+      text-align: center;
+      transition: all 0.2s;
+
+    }
+
+    #status.ok {
+      color: #3cb97a;
+    }
+
+    #status.erro {
+      color: #e8613a;
+    }
+
+    a {
+      font-size: 8px;
+      color: #fff;
+      text-decoration: none;
+      letter-spacing: 0.06em;
+
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .git{
+      width: 100%;
+      text-align: end;
+    }
+  </style>
+</head>
+
+<body>
+  <button class="card" id="btn">Preencher código</button>
+  <div id="status"></div>
+
+  <script src="popup.js"></script>
+</body>
+
+</html>

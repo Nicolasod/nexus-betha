@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nexus - Portal do Conhecimento</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Roboto Mono', monospace;
+      background: #16162a;
+      color: #e0e0e0;
+      padding: 30px 50px;
+      line-height: 1.6;
+      scroll-behavior: smooth;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(0,224,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,224,255,0.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .top-nav {
+      position: relative;
+      z-index: 10;
+      padding: 0 0 24px 0;
+    }
+    .top-nav a {
+      display: inline-block;
+      background: rgba(0,224,255,0.08);
+      border: 1px solid rgba(0,224,255,0.25);
+      color: #00e0ff;
+      text-decoration: none;
+      font-size: 0.78rem;
+      font-weight: bold;
+      padding: 8px 12px;
+      border-radius: 8px;
+      letter-spacing: 1px;
+      transition: background 0.2s, box-shadow 0.2s;
+    }
+    .top-nav a:hover {
+      background: rgba(0,224,255,0.15);
+      box-shadow: 0 4px 12px rgba(0,224,255,0.2);
+    }
+
+    h1, h2 {
+      text-align: center;
+      color: #00e0ff;
+      margin-bottom: 15px;
+      text-shadow: 0 0 8px #00e0ff;
+    }
+    h1 { font-size: 2.4rem; }
+    h2 { font-size: 1.6rem; margin-top: 40px; margin-bottom: 20px; }
+
+    p.center {
+      text-align: center;
+      color: #a0a0a0;
+      font-style: italic;
+      margin-bottom: 30px;
+    }
+
+    hr {
+      margin: 40px auto;
+      border: none;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(0,224,255,0.3), transparent);
+      width: 60%;
+    }
+
+    main { max-width: 1100px; margin: 0 auto; position: relative; z-index: 1; animation: fadeUp 0.5s ease both; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      margin-bottom: 40px;
+      background: #1c1c2e;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5);
+    }
+
+    th:last-child, td:last-child { width: 10%; text-align: center; }
+
+    th, td { padding: 16px 14px; text-align: left; font-size: 0.95rem; }
+    th { background: #2a2a3f; font-weight: 700; color: #00ffff; font-size: 1rem; }
+    tr:nth-child(even) td { background: #262639; }
+    tr:hover td { background: #33334a; transition: background 0.3s; }
+
+    a {
+      display: inline-block;
+      text-decoration: none;
+      background: linear-gradient(45deg, #00e0ff, #0055ff);
+      color: #fff;
+      padding: 6px 18px;
+      border-radius: 8px;
+      font-weight: 500;
+      box-shadow: 0 4px 12px rgba(0, 224, 255, 0.4);
+      transition: all 0.3s ease;
+    }
+    a:hover {
+      background: linear-gradient(45deg, #0055ff, #00e0ff);
+      transform: translateY(-2px) scale(1.05);
+      box-shadow: 0 6px 16px rgba(0, 224, 255, 0.6);
+    }
+
+    .badge-new {
+      display: inline-block;
+      background: #00e0ff;
+      color: #0f0f1d;
+      padding: 3px 8px;
+      margin-left: 10px;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: bold;
+      animation: pulseNew 1.6s infinite ease-in-out;
+    }
+    @keyframes pulseNew {
+      0%   { transform: scale(1);    box-shadow: 0 0 6px #00e0ff; }
+      50%  { transform: scale(1.15); box-shadow: 0 0 14px #00e0ff; }
+      100% { transform: scale(1);    box-shadow: 0 0 6px #00e0ff; }
+    }
+
+    footer { text-align: center; margin-top: 40px; color: #505070; font-size: 0.7rem; letter-spacing: 2px; position: relative; z-index: 1; }
+
+    @media (max-width: 768px) {
+      body { padding: 20px 25px; }
+      th, td { padding: 12px 8px; font-size: 0.9rem; }
+      h1 { font-size: 2rem; }
+      h2 { font-size: 1.3rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="top-nav"><a href="index.html">← Nexus</a></nav>
+
+  <main>
+    <h1>🎓 Treinamentos</h1>
+    <p class="center"><em>Central de treinamentos oficiais e internos da Betha Sistemas.</em></p>
+    <hr>
+
+    <h2 id="treinamento">🎥 Central de Treinamento Betha</h2>
+    <table>
+      <tr>
+        <th>Página</th>
+        <th>Descrição</th>
+        <th>Link</th>
+      </tr>
+      <tr>
+        <td>📚 Minha trilha Vertical Pessoal</td>
+        <td>Assista aos vídeos de treinamento na plataforma Betha. Vertical Pessoal</td>
+        <td><a href="https://edu.betha.com.br/local/trails/54/" target="_blank">Acessar</a></td>
+      </tr>
+      <tr data-date="2025-11-20">
+        <td>📚 Minha trilha Contratos</td>
+        <td>Assista aos vídeos de treinamento na plataforma Betha. Contratos</td>
+        <td><a href="https://edu.betha.com.br/local/trails/44/" target="_blank">Acessar</a></td>
+      </tr>
+      <tr data-date="2026-01-23">
+        <td>📚 Minha trilha Contábil</td>
+        <td>Assista aos vídeos de treinamento na plataforma Betha. Contábil</td>
+        <td><a href="https://edu.betha.com.br/local/trails/45/" target="_blank">Acessar</a></td>
+      </tr>
+      <tr data-date="2026-01-23">
+        <td>📚 Minha trilha Vert. Arrecadação</td>
+        <td>Assista aos vídeos de treinamento na plataforma Betha. Vertical Arrecadação</td>
+        <td><a href="https://edu.betha.com.br/local/trails/47/" target="_blank">Acessar</a></td>
+      </tr>
+      <tr data-date="2026-02-09">
+        <td>📚 Minha trilha Vertical Educação</td>
+        <td>Assista aos vídeos de treinamento na plataforma Betha. Vertical Educação</td>
+        <td><a href="https://edu.betha.com.br/local/trails/46/" target="_blank">Acessar</a></td>
+      </tr>
+      <tr data-date="2026-07-22">
+        <td>📚 Minha trilha Vertical Saúde</td>
+        <td>Assista aos vídeos de treinamento na plataforma Betha. Vertical Saúde</td>
+        <td><a href="https://edu.betha.com.br/local/trails/48/" target="_blank">Acessar</a></td>
+      </tr>
+      <tr data-date="2026-07-22">
+        <td>📚 Minha trilha Vertical Atendimento</td>
+        <td>Assista aos vídeos de treinamento na plataforma Betha. Vertical Atendimento</td>
+        <td><a href="https://edu.betha.com.br/local/trails/51/" target="_blank">Acessar</a></td>
+      </tr>
+      <tr data-date="2026-07-22">
+        <td>📚 Diretoria de Atendimento e Serviços</td>
+        <td>Assista aos vídeos de treinamento na plataforma Betha. Diretoria de Atendimento e Serviços</td>
+        <td><a href="https://edu.betha.com.br/local/trails/58/" target="_blank">Acessar</a></td>
+      </tr>
+      <tr data-date="2026-07-22">
+        <td>📚 Bem vindo à Betha Sistemas</td>
+        <td>Assista aos vídeos de treinamento na plataforma Betha. Bem vindo à Betha Sistemas</td>
+        <td><a href="https://edu.betha.com.br/local/trails/41/" target="_blank">Acessar</a></td>
+      </tr>
+      <tr data-date="2026-07-22">
+        <td>📚 Onboarding Técnico / Ferramentas</td>
+        <td>Assista aos vídeos de treinamento na plataforma Betha. Onboarding Técnico / Ferramentas</td>
+        <td><a href="https://edu.betha.com.br/local/trails/62/" target="_blank">Acessar</a></td>
+      </tr>
+      <tr data-date="2026-07-22">
+        <td>📚 Processos e Ferramentas</td>
+        <td>Assista aos vídeos de treinamento na plataforma Betha. Processos e Ferramentas</td>
+        <td><a href="https://edu.betha.com.br/local/trails/60/" target="_blank">Acessar</a></td>
+      </tr>
+      <tr data-date="2026-07-22">
+        <td>📚 Jornada de Relacionamento</td>
+        <td>Assista aos vídeos de treinamento na plataforma Betha. Jornada de Relacionamento</td>
+        <td><a href="https://edu.betha.com.br/local/trails/59/" target="_blank">Acessar</a></td>
+      </tr>
+    </table>
+
+    <h2 id="treinamentos">🚀 Treinamentos Internos</h2>
+    <table>
+      <tr>
+        <th>Título</th>
+        <th>Link</th>
+      </tr>
+      <tr data-date="2026-01-14">
+        <td>💰 Folha Cloud de Ponta a Ponta</td>
+        <td><a href="https://drive.google.com/drive/u/0/folders/1bv4PzBG_oJrDvMy2qirg8ui9mJfTZPG3" target="_blank">Acessar</a></td>
+      </tr>
+      <tr>
+        <td>🧠 Usando Fonte de Dados e IA no Dia a Dia do Atendimento</td>
+        <td><a href="https://drive.google.com/drive/folders/1NCSAwHz4Yb1aHQKLCjN8C8WzzmTmSOq6" target="_blank">Acessar</a></td>
+      </tr>
+      <tr>
+        <td>👥 RH - Recrutamento e Seleção</td>
+        <td><a href="https://drive.google.com/drive/folders/1tFYxT5DkuhABD6XYUF1kDHP5wfxu-8hr" target="_blank">Acessar</a></td>
+      </tr>
+      <tr>
+        <td>🧾 eSocial - Da Implantação ao Dia a Dia</td>
+        <td><a href="https://drive.google.com/drive/folders/1J_F4VUxgm5-wF3TNvUk1L7ANUtHQFepy" target="_blank">Acessar</a></td>
+      </tr>
+      <tr>
+        <td>🧮 Impactos da DIRF no eSocial</td>
+        <td><a href="https://drive.google.com/drive/folders/1BdVbzaYcI2ZAEbSRKanMOiSKwT0f5C0e" target="_blank">Acessar</a></td>
+      </tr>
+      <tr>
+        <td>🔄 Integração - Folha × Contabilidade</td>
+        <td><a href="https://drive.google.com/drive/folders/1lSxtoZvM7bBdGnOc9A_INTumq9oQK6aF" target="_blank">Acessar</a></td>
+      </tr>
+      <tr>
+        <td>⏱️ Gestão de Ponto com Eficiência</td>
+        <td><a href="https://drive.google.com/drive/folders/1VbVwGEu1bhMlEfZWYRymV5onrClrkatX" target="_blank">Acessar</a></td>
+      </tr>
+      <tr data-date="2025-12-08">
+        <td>🔢 Fórmulas de ocorrências do Ponto</td>
+        <td><a href="https://drive.google.com/drive/folders/1jgMXkOpBaEyfvGII4HRIbd7f0tttjlAy" target="_blank">Acessar</a></td>
+      </tr>
+    </table>
+
+    <hr>
+    <p class="center"><em>"O aprendizado é o combustível da inovação."</em></p>
+  </main>
+
+  <footer>Desenvolvido por Nicolas Durante</footer>
+
+  <script>
+    const diasNovo = 10;
+    const hoje = new Date();
+    document.querySelectorAll("tr[data-date]").forEach(linha => {
+      const dataItem = new Date(linha.getAttribute("data-date"));
+      const diffDias = (hoje - dataItem) / (1000 * 60 * 60 * 24);
+      if (diffDias >= 0 && diffDias <= diasNovo) {
+        const col = linha.querySelector("td");
+        if (col) {
+          const badge = document.createElement("span");
+          badge.className = "badge-new";
+          badge.textContent = "NOVO!";
+          col.appendChild(badge);
+        }
+      }
+    });
+  </script>
+</body>
+</html>

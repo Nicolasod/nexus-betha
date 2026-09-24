@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Nexus - Portal do Conhecimento</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; }
+    body {
+      font-family: 'Roboto Mono', monospace;
+      background: #16162a;
+      color: #e0e0e0;
+      padding: 32px 48px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(0,224,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,224,255,0.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+      z-index: 0;
+    }
+    header { text-align: center; margin-bottom: 10px; position: relative; z-index: 1; }
+    h1 {
+      color: #00e0ff;
+      text-shadow: 0 0 8px #00e0ff;
+      font-size: 2.4rem;
+      margin-bottom: 6px;
+    }
+    p.lead {
+      text-align: center;
+      color: #a0a0a0;
+      font-style: italic;
+      margin-bottom: 18px;
+    }
+    hr.divider {
+      margin: 36px auto;
+      border: none;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(0,224,255,0.3), transparent);
+      width: 60%;
+    }
+
+    main { max-width: 1100px; margin: 0 auto; position: relative; z-index: 1; }
+
+    section { margin-bottom: 28px; padding: 18px; background: #1c1c2e; border-radius: 12px; box-shadow: 0 6px 18px rgba(0,0,0,0.5); }
+
+    h2 {
+      color: #00e0ff;
+      font-size: 1.25rem;
+      margin-bottom: 12px;
+      text-shadow: 0 0 6px rgba(0, 224, 255, 0.15);
+    }
+
+    .content p { margin: 8px 0; color: #dcdcdc; }
+    .content ul { margin: 8px 0 12px 18px; padding-left: 14px; }
+    .content li { margin-bottom: 8px; line-height: 1.5; }
+
+    .notice {
+      background: rgba(0, 224, 255, 0.04);
+      border-left: 3px solid rgba(0, 224, 255, 0.18);
+      padding: 10px 12px;
+      margin: 10px 0;
+      border-radius: 6px;
+      color: #cfeff6;
+    }
+
+    /* Estilo para sub-itens de chave de exportação */
+    .export-key {
+      margin-left: 32px;
+      margin-top: -6px;
+      margin-bottom: 8px;
+      color: #dcdcdc;
+      font-size: 0.95rem;
+      list-style: none;
+    }
+
+    code, pre {
+      background: #1c1c2e;
+      padding: 8px 10px;
+      border-radius: 8px;
+      color: #00ffff;
+      display: block;
+      white-space: pre-wrap;
+      font-size: 0.95rem;
+      margin-top: 8px;
+    }
+
+    .inline-code {
+      background: #1c1c2e;
+      padding: 3px 6px;
+      border-radius: 6px;
+      color: #00ffff;
+      font-size: 0.9rem;
+    }
+
+    .actions { margin-top: 10px; display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+
+    a.button, button {
+      display: inline-block;
+      text-decoration: none;
+      background: linear-gradient(45deg, #00e0ff, #0055ff);
+      color: #fff;
+      padding: 6px 16px;
+      border-radius: 8px;
+      font-weight: 600;
+      box-shadow: 0 6px 16px rgba(0, 224, 255, 0.18);
+      transition: all 0.22s ease;
+      border: none;
+      cursor: pointer;
+      font-family: 'Roboto Mono', monospace;
+    }
+    a.button:hover, button:hover {
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 8px 22px rgba(0, 224, 255, 0.22);
+    }
+
+    .email-field {
+      background: #0f1724;
+      color: #00e0ff;
+      border: 1px solid rgba(0,224,255,0.06);
+      padding: 6px 10px;
+      border-radius: 6px;
+      width: 340px;
+      font-family: 'Roboto Mono', monospace;
+      font-size: 0.95rem;
+    }
+
+    .copied-message { color: #00ff9f; margin-left: 8px; opacity: 0; transition: opacity 0.25s ease; font-weight: 600; }
+
+    .small { font-size: 0.92rem; color: #bdbdbd; }
+
+    footer { text-align: center; margin-top: 18px; color: #a8a8a8; }
+
+    @media (max-width: 900px) {
+      body { padding: 22px; }
+      .email-field { width: 100%; max-width: 320px; }
+    }
+
+    @media (max-width: 520px) {
+      h1 { font-size: 1.9rem; }
+      h2 { font-size: 1.05rem; }
+      body { padding: 14px; }
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(0,224,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,224,255,0.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    header, main, footer { position: relative; z-index: 1; }
+
+    .top-nav {
+      position: relative;
+      z-index: 10;
+      padding: 0 0 28px 0;
+    }
+    .top-nav a {
+      display: inline-block;
+      background: rgba(0,224,255,0.08);
+      border: 1px solid rgba(0,224,255,0.25);
+      color: #00e0ff;
+      text-decoration: none;
+      font-size: 0.78rem;
+      font-weight: bold;
+      padding: 8px 12px;
+      border-radius: 8px;
+      letter-spacing: 1px;
+      transition: background 0.2s, box-shadow 0.2s;
+    }
+    .top-nav a:hover {
+      background: rgba(0,224,255,0.15);
+      box-shadow: 0 4px 12px rgba(0,224,255,0.2);
+    }
+
+    hr.divider {
+      border: none;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(0,224,255,0.3), transparent);
+      width: 64%;
+      margin: 30px auto;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    main { animation: fadeUp 0.5s ease both; }
+
+    footer { text-align: center; margin-top: 32px; color: #505070; font-size: 0.7rem; letter-spacing: 2px; }
+  </style>
+</head>
+<body>
+  <nav class="top-nav"><a href="index.html">← Nexus</a></nav>
+  <header>
+    <h1>🔧 Checklist Implantação e Documentações Utilizadas</h1>
+    <p class="lead">Guia completo com os passos necessários para garantir uma implantação bem-sucedida do sistema.</p>
+    <hr class="divider">
+  </header>
+
+  <main>
+    <!-- 1 -->
+    <section aria-labelledby="sec1">
+      <h2 id="sec1">1. Verificação da Autorização de Implantação e Autorização de Cobrança</h2>
+      <div class="content">
+        <h3 class="small" style="margin-bottom:6px;color:#cfeff6;">Autorização de Implantação</h3>
+        <ul>
+          <li>Antes de iniciar a implantação, é obrigatória a verificação da existência da autorização de implantação no chamado correspondente.</li>
+          <li>Caso não esteja anexada, o Gerente de Projeto deve ser imediatamente comunicado.</li>
+          <li>O Gerente será responsável por solicitar ao time comercial a inclusão do documento no chamado.</li>
+          <li>Sem esse documento, a implantação não deve prosseguir.</li>
+        </ul>
+
+        <h3 class="small" style="margin-top:8px;margin-bottom:6px;color:#cfeff6;">Autorização de Cobrança</h3>
+        <ul>
+          <li>A autorização de cobrança é feita pela Joanna.</li>
+          <li>Este documento deve ser enviado ao cliente antes da liberação da base oficial.</li>
+          <li>O envio antecipado é crucial, pois:
+            <ul>
+              <li>No momento em que o cliente assinar a autorização, passa a valer o prazo definido no documento para o início da cobrança da mensalidade.</li>
+            </ul>
+          </li>
+          <li>Sem a autorização assinada, não deve haver liberação da base oficial.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 2 -->
+    <section aria-labelledby="sec2">
+      <h2 id="sec2">2. Primeiro Contato com o Cliente (KickOff)</h2>
+      <div class="content">
+        <ul>
+          <li><strong>Passo 2:</strong> Agendar a reunião de abertura de projeto com o cliente.</li>
+          <li>Durante essa reunião, será realizado o levantamento de requisitos.</li>
+          <li>Apresentação do cronograma de implantação: elaborado previamente. O cronograma pode ser alterado conforme a necessidade e o alinhamento com o cliente.</li>
+        </ul>
+
+        <div class="notice">
+          <strong>Elaboração do Cronograma:</strong>
+          <ul style="margin-top:8px;">
+            <li>Para base pequena: a implantação pode ser feita diretamente para a base oficial.</li>
+            <li>Para base grande: é necessário criar uma base de homologação antes de migrar para a base oficial.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3 -->
+    <section aria-labelledby="sec3">
+      <h2 id="sec3">3. Documento "Acordo de Escopo"</h2>
+      <div class="content">
+        <ul>
+          <li><strong>Passo 3:</strong> Após a reunião e a demonstração do cronograma, será elaborado o documento "Acordo de Escopo".</li>
+          <li>Conteúdo do Acordo de Escopo:
+            <ul>
+              <li>Datas principais para as etapas da implantação.</li>
+              <li>Definição do que faz parte e do que não faz parte da implantação.</li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 4 -->
+    <section aria-labelledby="sec4">
+      <h2 id="sec4">4. Solicitação de Backup da Base</h2>
+      <div class="content">
+        <ul>
+          <li><strong>Passo 4:</strong> Solicitar ao cliente o backup da base, com data marcada na abertura do projeto.</li>
+          <li>Criar um link FTP para o cliente enviar o backup.</li>
+          <li>Após receber o backup, realizar o saneamento da base.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 5 -->
+    <section aria-labelledby="sec5">
+      <h2 id="sec5">5. Saneamento da Base</h2>
+      <div class="content">
+        <ul>
+          <li><strong>Passo 5:</strong> O saneamento da base é um chamado separado do chamado de implantação, com o objetivo de corrigir erros existentes na base do cliente.</li>
+          <li>Tipo do chamado: “Tratamento de dados”.</li>
+          <li>As correções são feitas para garantir que a migração ocorra corretamente de acordo com as regras do cloud.</li>
+          <li>Enviar a APS para o cliente junto com o relatório de inconsistências gerado pelo desktop.</li>
+          <li>Erros nos arqjob de validações: Criar chamado de incidente/dúvida; o suporte irá encaminhar o chamado para a equipe responsável “Migração”. Quem corrige os arqjob de pré-validação é o desenvolvimento.</li>
+        </ul>
+
+        <div class="notice" style="margin-top:10px;">
+          <strong>ATENÇÃO!</strong>
+          <p style="margin-top:6px;color:#e7fdf8;">Para os vínculos empregatícios que já possuem categoria eSocial preenchido, não realizar alterações se os funcionários vinculados já foram ao eSocial.</p>
+          <p style="margin-top:6px;color:#e7fdf8;">Para vínculos empregatícios sem categoria eSocial, pode ser usado o seguinte comando como exemplo, lembrando que cada cliente possui uma listagem de veículos diferentes, então esse comando precisa ser ajustado em cada cliente com as categorias correspondentes.</p>
+
+          <pre><code>update bethadba.vinculos 
+set categoria_esocial = 
+
+case i_motivos_resc 
+when 6 then '306' 
+
+when 18 then '701' 
+when 20 then '306' 
+else categoria_esocial end 
+where categoria_esocial is null; commit;</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6 -->
+    <section aria-labelledby="sec6">
+      <h2 id="sec6">6. Solicitação de Criação do Ambiente de Homologação</h2>
+      <div class="content">
+        <ul>
+          <li><strong>Passo 6:</strong> Solicitar a criação do ambiente de homologação:</li>
+          <li style="margin-top:8px;">
+            Enviar e-mail para:<br><br>
+            <input type="text" id="email-homolog" class="email-field" value="bethasenha@betha.com.br" readonly aria-label="Email para homologacao">
+            <div class="actions" style="margin-top:8px;">
+              <button onclick="copyToClipboard('bethasenha@betha.com.br','msg-homolog')">📋 Copiar e-mail</button>
+              <span id="msg-homolog" class="copied-message" aria-hidden="true">Copiado!</span>
+              <span class="small">Com cópia para o coordenador.</span>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 7 -->
+    <section aria-labelledby="sec7">
+      <h2 id="sec7">7. Solicitação de Criação do Ambiente Oficial</h2>
+      <div class="content">
+        <ul>
+          <li><strong>Passo 7:</strong> Solicitar a criação do ambiente oficial:</li>
+          <li style="margin-top:8px;">
+            Enviar e-mail para:<br><br>
+            <input type="text" id="email-oficial" class="email-field" value="comercial@betha.com.br" readonly aria-label="Email para ambiente oficial">
+            <div class="actions" style="margin-top:8px;">
+              <button onclick="copyToClipboard('comercial@betha.com.br','msg-oficial')">📋 Copiar e-mail</button>
+              <span id="msg-oficial" class="copied-message" aria-hidden="true">Copiado!</span>
+              <span class="small">Com cópia para o coordenador.</span>
+            </div>
+          </li>
+          <li style="margin-top:8px;">Modelo de solicitação para o e-mail do comercial:
+            <div style="margin-top:8px;">
+              <a class="button" href="https://docs.google.com/document/d/1bSuOMuLctjwue4KJTw0pi6UogPgYHH7myVQ8F1X9-q0/edit?tab=t.0" target="_blank" rel="noopener noreferrer">Abrir modelo de solicitação</a>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 8 -->
+    <section aria-labelledby="sec8">
+      <h2 id="sec8">8. Migração da Base</h2>
+      <div class="content">
+        <ul>
+          <li><strong>Passo 8:</strong> A versão do sistema deve estar atualizada. Colocar o print da versão do sistema no comentário do chamado.</li>
+          <li>Enviar para a migração no seguinte formato (comentário no chamado de implantação):</li>
+        </ul>
+
+        <pre><code>=== Solicitação de migração Oficial ===
+Link drive do banco:
+Relatório de validação:
+Print da versão do sistema desktop:
+Acesso liberado para usuário: user_conversao
+Nome da entidade no sistema cloud: MUNICIPIO DE BELMONTE
+Entidade que será migrada: 1 e 3.
+Sistemas a serem migrados: Folha e RH.
+Observações: Validação 199 foi aberto chamado pois os dados demonstrados no select não correspondem com a realidade.</code></pre>
+
+        <ul style="margin-top:10px;">
+          <li>Importante: Para que a migração saiba que a base está pronta para ser migrada, o status do chamado de implantação deve ser “Aguardando migração de homologação” ou “Aguardando migração de produção”.</li>
+          <li>Atualizar o status do chamado de implantação para garantir o controle do processo.</li>
+          <li>Durante a migração, treinamento com o cliente pode ser realizado.</li>
+          <li>Configuração do ambiente conforme a necessidade de cada vertical.</li>
+          <li>Após a migração, o status do chamado deve ser alterado para "Realizar acompanhamento" e deve ser alterado por quem migrou.</li>
+        </ul>
+        
+      </div>
+    </section>
+
+    <!-- 9 -->
+    <section aria-labelledby="sec9">
+      <h2 id="sec9">9. Treinamento com o Cliente</h2>
+      <div class="content">
+        <ul>
+          <li><strong>Passo 9:</strong> Realizar o treinamento com o cliente, que pode ser remoto ou presencial.</li>
+          <li>Após o treinamento, obter o documento assinado pelo cliente.</li>
+          <li>O documento deve listar todos os menus do sistema, para garantir que o cliente não alegue falta de treinamento em alguma área específica.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 10 -->
+    <section aria-labelledby="sec10">
+      <h2 id="sec10">10. Realizar Acompanhamento</h2>
+      <div class="content">
+        <ul>
+          <li><strong>Passo 10:</strong> Durante o acompanhamento, efetuar as configurações de acordo com cada vertical e continuar o acompanhamento das etapas da implantação.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 11 -->
+    <section aria-labelledby="sec11">
+      <h2 id="sec11">11. Finalização da Implantação</h2>
+      <div class="content">
+        <ul>
+          <li><strong>Passo 11:</strong> Após a conclusão da implantação, obter o aceite de implantação do cliente.</li>
+        </ul>
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <!-- Documentos -->
+    <section aria-labelledby="docs">
+      <h2 id="docs">📄 Documentos Necessários Durante a Implantação</h2>
+      <div class="content">
+        <ul>
+          <li>📎 Autorização de Implantação (assinado).</li>
+          <li>📎 Autorização de Cobrança (assinado).</li>
+          <li>📎 Acordo de Escopo (assinado).</li>
+          <li>📎 Treinamento (assinado).</li>
+          <li>📎 Aceite de Implantação (assinado).</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Scripts -->
+<section aria-labelledby="scripts">
+  <h2 id="scripts">💾 Scripts Utilizados Durante a Implantação - Linha Pessoal</h2>
+  <div class="content">
+    <p class="small">Abaixo estão os scripts/consultas e chaves de exportação conforme listado no documento.</p>
+    <ul style="margin-top:10px;">
+      
+      <li><strong>[CONSULTA]</strong> Matrículas ativas - gerar .csv</li>
+      <li class="export-key">
+        Chave de exportação: <span class="inline-code" id="token1">ef5e0418-c482-4c4c-8a2b-964725ee017a</span>
+        <button class="copy-btn" onclick="copyToClipboard('ef5e0418-c482-4c4c-8a2b-964725ee017a','msg-token1')">📋</button>
+        <span id="msg-token1" class="copied-message" aria-hidden="true">Copiado!</span>
+      </li>
+
+      <li style="margin-top:12px;"><strong>[CONSULTA]</strong> Pessoas sem CPF - Somente quem tem remuneração</li>
+      <li class="export-key">
+        Chave de exportação: <span class="inline-code" id="token2">776a06b2-5908-4582-bb31-2c1edd86783d</span>
+        <button class="copy-btn" onclick="copyToClipboard('776a06b2-5908-4582-bb31-2c1edd86783d','msg-token2')">📋</button>
+        <span id="msg-token2" class="copied-message" aria-hidden="true">Copiado!</span>
+      </li>
+
+      <li style="margin-top:12px;"><strong>[CONSULTA]</strong> Eventos de férias com movimentação em folha sem réplica - 2.0</li>
+      <li class="export-key">
+        Chave de exportação: <span class="inline-code" id="token3">6fc26ff8-66ee-409d-9bc2-b36c1a5a0238</span>
+        <button class="copy-btn" onclick="copyToClipboard('6fc26ff8-66ee-409d-9bc2-b36c1a5a0238','msg-token3')">📋</button>
+        <span id="msg-token3" class="copied-message" aria-hidden="true">Copiado!</span>
+      </li>
+
+      <li style="margin-top:12px;"><strong>[CONSULTA]</strong> Verifica período aquisitivo com problemas - gera .csv - API de tela</li>
+      <li class="export-key">
+        Chave de exportação: <span class="inline-code" id="token4">dd121292-b3e2-45e9-9257-c533218be785</span>
+        <button class="copy-btn" onclick="copyToClipboard('dd121292-b3e2-45e9-9257-c533218be785','msg-token4')">📋</button>
+        <span id="msg-token4" class="copied-message" aria-hidden="true">Copiado!</span>
+      </li>
+
+      <li style="margin-top:12px;"><strong>[ALTERAÇÃO]</strong> Datas de início e fim do período aquisitivo</li>
+      <li class="export-key">
+        Chave de exportação: <span class="inline-code" id="token5">79c26739-adf5-4e47-96d9-2da1d2591f1c</span>
+        <button class="copy-btn" onclick="copyToClipboard('79c26739-adf5-4e47-96d9-2da1d2591f1c','msg-token5')">📋</button>
+        <span id="msg-token5" class="copied-message" aria-hidden="true">Copiado!</span>
+      </li>
+
+      <li style="margin-top:12px;"><strong>[CONSULTA]</strong> Valida Líquido Férias - Réplicas Negativas</li>
+      <li class="export-key">
+        Chave de exportação: <span class="inline-code" id="token6">03e0d545-6ccc-4f2a-9172-1126256aa95a</span>
+        <button class="copy-btn" onclick="copyToClipboard('03e0d545-6ccc-4f2a-9172-1126256aa95a','msg-token6')">📋</button>
+        <span id="msg-token6" class="copied-message" aria-hidden="true">Copiado!</span>
+      </li>
+
+    </ul>
+  </div>
+</section>
+
+    <section aria-labelledby="closing">
+      <h2 id="closing">Observações Finais</h2>
+      <div class="content">
+        <p>“O sucesso da implantação está no planejamento e na execução cuidadosa de cada etapa.”</p>
+      </div>
+    </section>
+  </main>
+
+  <hr class="divider">
+  <footer>Desenvolvido por Nicolas Durante</footer>
+
+  <script>
+    // Função de cópia com navigator.clipboard e fallback
+    function copyToClipboard(text, msgId) {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(function() {
+          showCopied(msgId);
+        }, function() {
+          fallbackCopy(text, msgId);
+        });
+      } else {
+        fallbackCopy(text, msgId);
+      }
+    }
+
+    function fallbackCopy(text, msgId) {
+      try {
+        var ta = document.createElement('textarea');
+        ta.value = text;
+        ta.style.position = 'fixed';
+        ta.style.left = '-9999px';
+        document.body.appendChild(ta);
+        ta.select();
+        ta.setSelectionRange(0, ta.value.length);
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+        showCopied(msgId);
+      } catch (e) {
+        alert('Não foi possível copiar o e-mail automaticamente. Selecione e copie manualmente: ' + text);
+      }
+    }
+
+    function showCopied(msgId) {
+      var el = document.getElementById(msgId);
+      if (!el) return;
+      el.style.opacity = 1;
+      setTimeout(function() { el.style.opacity = 0; }, 1700);
+    }
+
+    // Permite selecionar o texto ao clicar no campo (facilita cópia manual)
+    document.querySelectorAll('.email-field').forEach(function(input){
+      input.addEventListener('click', function(){ this.select(); });
+    });
+  </script>
+</body>
+</html>
