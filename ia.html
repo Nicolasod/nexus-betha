@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nexus - Portal do Conhecimento</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Roboto Mono', monospace;
+      background: #16162a;
+      color: #e0e0e0;
+      padding: 30px 50px;
+      line-height: 1.6;
+      scroll-behavior: smooth;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(0,224,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,224,255,0.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .top-nav {
+      position: relative;
+      z-index: 10;
+      padding: 0 0 24px 0;
+    }
+    .top-nav a {
+      display: inline-block;
+      background: rgba(0,224,255,0.08);
+      border: 1px solid rgba(0,224,255,0.25);
+      color: #00e0ff;
+      text-decoration: none;
+      font-size: 0.78rem;
+      font-weight: bold;
+      padding: 8px 12px;
+      border-radius: 8px;
+      letter-spacing: 1px;
+      transition: background 0.2s, box-shadow 0.2s;
+    }
+    .top-nav a:hover {
+      background: rgba(0,224,255,0.15);
+      box-shadow: 0 4px 12px rgba(0,224,255,0.2);
+    }
+
+    h1, h2 {
+      text-align: center;
+      color: #00e0ff;
+      margin-bottom: 15px;
+      text-shadow: 0 0 8px #00e0ff;
+    }
+    h1 { font-size: 2.4rem; }
+    h2 { font-size: 1.6rem; margin-top: 40px; margin-bottom: 20px; }
+
+    p.center {
+      text-align: center;
+      color: #a0a0a0;
+      font-style: italic;
+      margin-bottom: 30px;
+    }
+
+    hr {
+      margin: 40px auto;
+      border: none;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(0,224,255,0.3), transparent);
+      width: 60%;
+    }
+
+    main {
+      max-width: 1100px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+      animation: fadeUp 0.5s ease both;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      margin-bottom: 40px;
+      background: #1c1c2e;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5);
+    }
+
+    th:last-child, td:last-child { width: 10%; text-align: center; }
+    th, td { padding: 16px 14px; text-align: left; font-size: 0.95rem; }
+    th { background: #2a2a3f; font-weight: 700; color: #00ffff; font-size: 1rem; }
+    tr:nth-child(even) td { background: #262639; }
+    tr:hover td { background: #33334a; transition: background 0.3s; }
+
+    a {
+      display: inline-block;
+      text-decoration: none;
+      background: linear-gradient(45deg, #00e0ff, #0055ff);
+      color: #fff;
+      padding: 6px 18px;
+      border-radius: 8px;
+      font-weight: 500;
+      box-shadow: 0 4px 12px rgba(0, 224, 255, 0.4);
+      transition: all 0.3s ease;
+    }
+    a:hover {
+      background: linear-gradient(45deg, #0055ff, #00e0ff);
+      transform: translateY(-2px) scale(1.05);
+      box-shadow: 0 6px 16px rgba(0, 224, 255, 0.6);
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      color: #505070;
+      font-size: 0.7rem;
+      letter-spacing: 2px;
+      position: relative;
+      z-index: 1;
+    }
+
+    @media (max-width: 768px) {
+      body { padding: 20px 25px; }
+      th, td { padding: 12px 8px; font-size: 0.9rem; }
+      h1 { font-size: 2rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="top-nav"><a href="index.html">← Nexus</a></nav>
+
+  <main>
+    <h1>🤖 Agentes de IA</h1>
+    <p class="center"><em>Assistentes inteligentes para o dia a dia da equipe Betha.</em></p>
+    <hr>
+
+    <table>
+      <tr>
+        <th>Agente</th>
+        <th>Função</th>
+        <th>Acesso</th>
+      </tr>
+      <tr>
+        <td>🧩 Beth – Agente de Validações e Correções de Dados</td>
+        <td>Revisão, correção e validação de informações.</td>
+        <td><a href="https://gemini.google.com/gem/1mpZ1eDCMg-bV1gD2uyM3S_CI_oITdTZd?usp=sharing" target="_blank">Abrir</a></td>
+      </tr>
+      <tr>
+        <td>🎵 Bethânia – A Compositora de Fórmulas</td>
+        <td>Criação e explicação de fórmulas automatizadas.</td>
+        <td><a href="https://gemini.google.com/gem/1mJ9FhM1ocg5C1BkBNbE19qRc3nxz7YRP?usp=sharing" target="_blank">Abrir</a></td>
+      </tr>
+      <tr>
+        <td>🎼 Beethoven – O Maestro de Scripts</td>
+        <td>Automação e scripts avançados.</td>
+        <td><a href="https://gemini.google.com/gem/1IeutkbTHtHukRcpUSBBGmzU7FlBhW5jy?usp=sharing" target="_blank">Abrir</a></td>
+      </tr>
+      <tr>
+        <td>🧾 Beethoven – O Maestro do eSocial</td>
+        <td>Automatiza processos do eSocial.</td>
+        <td><a href="https://gemini.google.com/gem/1PXjeqQ1tmYgk0D9lOcoM1lDLjm7gzNhT?usp=sharing" target="_blank">Abrir</a></td>
+      </tr>
+      <tr>
+        <td>🏗️ Beth – A ArquitetA de Soluções (Linha Pessoal 1.0)</td>
+        <td>Cria soluções personalizadas para automações internas.</td>
+        <td><a href="https://gemini.google.com/gem/b667ff843e67?usp=sharing" target="_blank">Abrir</a></td>
+      </tr>
+      <tr>
+        <td>☁️ Betha Cloud RH API Reference</td>
+        <td>Documentação interativa de APIs RH Cloud.</td>
+        <td><a href="https://notebooklm.google.com/notebook/22f8c65b-d78f-443c-9bb2-51a34736d156?pli=1" target="_blank">Abrir</a></td>
+      </tr>
+      <tr>
+        <td>⭐ Ciclo de Gente 2026</td>
+        <td>Assistente focado em apoiar o processo de avaliação de desempenho de forma acolhedora, imparcial e didática.</td>
+        <td><a href="https://gemini.google.com/gem/15210213b1ef?usp=sharing" target="_blank">Abrir</a></td>
+      </tr>
+    </table>
+  </main>
+
+  <hr>
+  <footer>Desenvolvido por Nicolas Durante</footer>
+
+</body>
+</html>

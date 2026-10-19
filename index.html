@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nexus - Portal do Conhecimento</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Roboto Mono', monospace;
+      background: #16162a;
+      color: #e0e0e0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+      overflow-x: hidden;
+    }
+
+    /* grade de fundo */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(0,224,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,224,255,0.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      max-width: 1000px;
+      animation: fadeUp 0.6s ease both;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .badge {
+      font-size: 0.7rem;
+      letter-spacing: 3px;
+      color: #00e0ff;
+      border: 1px solid rgba(0,224,255,0.3);
+      padding: 4px 14px;
+      border-radius: 20px;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+    }
+
+    .logo {
+      font-size: 3.6rem;
+      font-weight: 700;
+      color: #00e0ff;
+      text-shadow: 0 0 20px rgba(0,224,255,0.6), 0 0 60px rgba(0,224,255,0.2);
+      letter-spacing: 10px;
+      margin-bottom: 12px;
+    }
+
+    .subtitle {
+      color: #606080;
+      font-size: 0.85rem;
+      letter-spacing: 2px;
+      margin-bottom: 16px;
+    }
+
+    .divider {
+      width: 60px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #00e0ff, transparent);
+      margin-bottom: 56px;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      width: 100%;
+    }
+
+    .card {
+      background: linear-gradient(145deg, #13132a, #0f0f20);
+      border: 1px solid rgba(0,224,255,0.15);
+      border-radius: 14px;
+      padding: 36px 28px;
+      text-decoration: none;
+      color: #e0e0e0;
+      transition: all 0.25s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #00e0ff, transparent);
+      opacity: 0;
+      transition: opacity 0.25s ease;
+    }
+
+    .card:hover {
+      border-color: rgba(0,224,255,0.25);
+      transform: translateY(-6px);
+      box-shadow: 0 16px 40px rgba(0, 224, 255, 0.08), 0 4px 12px rgba(0,0,0,0.4);
+    }
+
+    .card:hover::before {
+      opacity: 1;
+    }
+
+    .card-icon {
+      font-size: 1.8rem;
+      line-height: 1;
+    }
+
+    .card-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #00e0ff;
+      letter-spacing: 1px;
+    }
+
+    .card-desc {
+      font-size: 0.78rem;
+      color: #707090;
+      line-height: 1.6;
+    }
+
+    .card-arrow {
+      margin-top: auto;
+      font-size: 0.75rem;
+      color: rgba(0,224,255,0.4);
+      transition: color 0.2s, transform 0.2s;
+      display: inline-block;
+    }
+
+    .card:hover .card-arrow {
+      color: #00e0ff;
+      transform: translateX(4px);
+    }
+
+    footer {
+      margin-top: 64px;
+      color: #505070;
+      font-size: 0.7rem;
+      letter-spacing: 2px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <div class="badge">Betha Sistemas</div>
+    <div class="logo">NEXUS</div>
+    <div class="subtitle">Portal de Conhecimento</div>
+    <div class="divider"></div>
+
+    <div class="cards">
+
+      <a href="Documentacao_Betha_v2.html" class="card">
+        <div class="card-icon">📖</div>
+        <div class="card-title">Documentação</div>
+        <div class="card-desc">Referências técnicas, documentações e recursos para o dia a dia dos sistemas Betha.</div>
+        <span class="card-arrow">Acessar →</span>
+      </a>
+
+      <a href="automacao_cloud_Scripts.html" class="card">
+        <div class="card-icon">🛠️</div>
+        <div class="card-title">Scripts &amp; Relatórios</div>
+        <div class="card-desc">Biblioteca de scripts e relatórios customizados para o portal cloud Betha.</div>
+        <span class="card-arrow">Acessar →</span>
+      </a>
+
+      <a href="ia.html" class="card">
+      <div class="card-icon">🤖</div>
+      <div class="card-title">Agentes de IA</div>
+      <div class="card-desc">Assistentes inteligentes para o dia a dia — fórmulas, scripts, eSocial e muito mais.</div>
+      <span class="card-arrow">Acessar →</span>
+    </a>
+
+    <a href="treinamento.html" class="card">
+      <div class="card-icon">🎓</div>
+      <div class="card-title">Treinamentos</div>
+      <div class="card-desc">Trilhas oficiais Betha e treinamentos internos da equipe.</div>
+      <span class="card-arrow">Acessar →</span>
+    </a>
+
+    <a href="prestacao_contas.html" class="card">
+      <div class="card-icon">🏛️</div>
+      <div class="card-title">Prestação de Contas</div>
+      <div class="card-desc">Recursos para eSocial e eSfinge — obrigações acessórias e prestação de contas.</div>
+      <span class="card-arrow">Acessar →</span>
+    </a>
+
+    <a href="implantacao.html" class="card">
+      <div class="card-icon">🚀</div>
+      <div class="card-title">Implantação</div>
+      <div class="card-desc">Checklists, etapas e procedimentos para implantação dos módulos.</div>
+      <span class="card-arrow">Acessar →</span>
+    </a>
+
+    <a href="https://emanuelmelo87.github.io/central-atendimento-betha/" target="_blank" class="card">
+      <div class="card-icon">🎧</div>
+      <div class="card-title">Central de Atendimento</div>
+      <div class="card-desc">Recursos e referências para o atendimento ao cliente Betha.</div>
+      <span class="card-arrow">Acessar →</span>
+    </a>
+
+    <a href="https://documentos-servicos-betha.artur-cadorin.workers.dev/" target="_blank" class="card">
+      <div class="card-icon">📄</div>
+      <div class="card-title">Gerador de Documentos</div>
+      <div class="card-desc">Ferramenta para padronização de documentação de serviços Betha.</div>
+      <span class="card-arrow">Acessar →</span>
+    </a>
+
+    <a href="https://chamados-jira.vercel.app/" target="_blank" class="card">
+      <div class="card-icon">🎫</div>
+      <div class="card-title">Chamados</div>
+      <div class="card-desc">Painel de chamados e acompanhamento de tickets da equipe.</div>
+      <span class="card-arrow">Acessar →</span>
+    </a>
+
+    <a href="extensoes.html" class="card">
+      <div class="card-icon">🧩</div>
+      <div class="card-title">Extensões Chrome</div>
+      <div class="card-desc">Extensões para o Chrome desenvolvidas pela equipe para uso nos sistemas Betha.</div>
+      <span class="card-arrow">Acessar →</span>
+    </a>
+
+    </div>
+
+    <footer>Desenvolvido por Nicolas Durante</footer>
+
+  </div>
+</body>
+</html>
